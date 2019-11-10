@@ -293,22 +293,80 @@ GND  	GND		GND
 SCL		SCL		5
 SDA		SDA		3
 
-18. Install I2C OLED command line
+18. Install OLED status monitor
 
-mkdir /var/lib/bananapi
-echo "BOARD=bpi-m2z" >> /var/lib/bananapi/board.sh
-
-git clone https://github.com/BPI-SINOVOIP/BPI-WiringPi2
-cd BPI-WiringPi2
+git clone https://github.com/zhaolei/WiringOP.git -b h3 
+cd WiringOP
 chmod +x ./build
-./build
-cd ..
+sudo ./build
 
 git clone https://github.com/nopnop2002/ssd1306_rpi.git
 cd ssd1306_rpi
 
 cc -o oled oled.c fontx.c -lwiringPi -lcrypt -lm -lrt -lpthread -DI2C  
 bash ./test.sh 
+
+wget https://raw.githubusercontent.com/makserge/smarthome_controller/master/pushbuttons.c
+
+gcc -lwiringPi -lcrypt -lm -lrt -lpthread -o pushbuttons pushbuttons.c
+./pushbuttons
+
+nano /usr/local/bin/run23release.sh
+
+#!/bin/bash
+
+cpuTemp=`cat /sys/devices/virtual/thermal/thermal_zone0/temp`
+cpuTempDegree=$((cpuTemp/1000))
+
+freeRAM=`free | grep Mem | awk '{print $4/$2 * 100.0}'`
+freeRAMRounded=`printf "%.1f" $freeRAM`
+
+usedSpace=`df --output=pcent / | awk -F'%' 'NR==2{print $1}'`
+freeSpace=$((100-$usedSpace))
+
+cd /root/ssd1306_rpi
+
+./oled r
+./oled +1 `hostname -I | cut -d' ' -f1` 
+./oled +2 "Temp: $cpuTempDegree"
+./oled +3 "Free RAM: $freeRAMRounded%"
+./oled +4 "Free space: $freeSpace%"
+./oled s
+sleep 10
+
+./oled r
+./oled s
+
+
+chmod +x /usr/local/bin/run23release.sh
+
+nano /usr/local/bin/run23short.sh
+#!/bin/bash
+
+chmod +x /usr/local/bin/run23short.sh
+
+
+nano /etc/systemd/system/pushbuttons.service
+
+[Unit]
+Description=pushbuttons
+After=network.target
+
+[Service]
+ExecStart=/root/pushbuttons
+WorkingDirectory=/root
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+sudo systemctl start pushbuttons
+sudo systemctl enable pushbuttons.service
 
 19. Flash CC2530 module
 https://www.aliexpress.com/item/ZigBee-Wireless-Module-CC2530-Module-Internet-Of-Things-Core-Board/32503616246.html
@@ -624,3 +682,12 @@ sudo systemctl start zigbee2mqtt
 
 # View the log of zigbee2mqtt
 sudo journalctl -u zigbee2mqtt.service -f
+
+25. 
+For the current CPU speed one can dynamically watch this change in real time using:
+
+sudo watch -n 1  cat /sys/devices/system/cpu/cpu*/cpufreq/cpuinfo_cur_freq
+
+and temperature
+
+cat /sys/devices/virtual/thermal/thermal_zone0/temp
