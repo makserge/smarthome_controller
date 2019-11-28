@@ -368,133 +368,47 @@ WantedBy=multi-user.target
 sudo systemctl start pushbuttons
 sudo systemctl enable pushbuttons.service
 
-19. Flash CC2530 module
-https://www.aliexpress.com/item/ZigBee-Wireless-Module-CC2530-Module-Internet-Of-Things-Core-Board/32503616246.html
+19. Flash E18-MS1PA1-IPX Zigbee CC2530 2.4Ghz 100mW IPX Antenna IoT uhf Wireless Transceiver 2.4g Transmitter Receiver Module CC2530 PA
+https://www.aliexpress.com/item/32640770110.html
 
-Reference
-https://www.aliexpress.com/item/ZigBee-Wireless-Module-CC2530-Module-Internet-Of-Things-Core-Board/32503616246.html
 
 Flashing proccess:
 
-19.1 Download and unpack the archive with the library https://github.com/kirovilya/CCLib.
+19.1 Download and unpack VLK DIY Multi Flasher (VLK_DIY_Multi_Flasher.rar) from
 
-19.2 Update pins in Arduino/CCLib/Examples/CCLib_proxy/CCLib_proxy.ino
+https://myzigbee.ru/books/%D0%BF%D1%80%D0%BE%D1%88%D0%B8%D0%B2%D0%BA%D0%B8/page/vlk-diy-multi-flasher
 
-Replace
+19.2 Connect ESP32 board to Windows PC and start VLK DIY Multi_Flasher.exe
+19.3 Switch to ZESP tab
+19.4 Select ESP's COM port
+19.5 Press "Write full flash" and wait for 3 minutes for finish
+19.6 Connect IO21 and GND on ESP32
+19.6 Connect Module to ESP32
 
-int CC_RST   = 5;
-int CC_DC    = 4;
-int CC_DD_I  = 3;
-int CC_DD_O  = 2;
+ESP32	CC2530 module
 
-to
+5		RESET 	24
+18		DC 		3
+19		DD		4
+GND		GND		1
+3.3V	3.3V	2
 
-int CC_RST   = 2;
-int CC_DC    = 4;
-int CC_DD_I  = 5;
-int CC_DD_O  = 16;
+19.7 Press Connect and check if module returned:
 
+ChipID: A5
+Chip: CC2530
+Rev: 24
+Size: 256k
 
-19.3 Flash NodeMCU Arduino/CCLib/Examples/CCLib_proxy/CCLib_proxy.ino sketch via Arduino IDE 
+19.8 Download firmware from goofyk(https://github.com/kirovilya)
 
-19.4 Connect CC2530 to NodeMcu
+https://www.dropbox.com/s/vl6b5q7kaflrbgm/CC2530ZNP.hex?dl=0
 
-NodeMCU		CC2530 debug port
+19.9 Flash firmware:
 
-2		RESET
-4		DC 
-5		DD
-16		DD
-GND		GND
-3.3V	3.3V
-Vin		5V
+Choose CC2530ZNP.hex and press "Write"
+Wait for Wrote Flash message (about 70s)
 
-19.5 Install Python 2.7 or later (tested with python 2.7.10), if not installed
-
-Install pyserial 3.0.1, if not installed 
-pip install pyserial==3.0.1
-
-19.6 Set baudrate for serial port /dev/cu.SLAB_USBtoUART to 9600
-
-19.7 Get information about the chip
-
-CCLib-master/Python/cc_info.py -p /dev/cu.SLAB_USBtoUART
-
-INFO: Found a CC2530 chip on /dev/cu.SLAB_USBtoUART
-
-Chip information:
-      Chip ID : 0xa524
-   Flash size : 256 Kb
-    Page size : 2 Kb
-    SRAM size : 8 Kb
-          USB : No
-
-Device information:
- IEEE Address : 00124b0013de
-           PC : 0000
-
-Debug status:
- [ ] CHIP_ERASE_BUSY
- [ ] PCON_IDLE
- [X] CPU_HALTED
- [ ] PM_ACTIVE
- [ ] HALT_STATUS
- [ ] DEBUG_LOCKED
- [X] OSCILLATOR_STABLE
- [ ] STACK_OVERFLOW
-
-Debug config:
- [ ] SOFT_POWER_MODE
- [ ] TIMERS_OFF
- [X] DMA_PAUSE
- [X] TIMER_SUSPEND
-
-19.8 Download firmware 
-
-wget https://github.com/Koenkk/Z-Stack-firmware/blob/master/coordinator/Z-Stack_Home_1.2/bin/default/CC2530_DEFAULT_20190608.zip?raw=true
-19.9 Make firmware compatible with CCLib
-
-Remove line before last one and save file as CC2530ZNP-Prod_mod_1.2.hex
-
-19.10 Flash firmware (it takes about 1.5 hours)
-
-python cc_write_flash.py -e -p COM4 --in=CC2530ZNP-Prod_mod_1.2.hex
-python cc_write_flash.py -e -p COM4 --in=CC2530ZNP-with-SBL_mod.hex
-
-python cc_write_flash.py -e -p /dev/cu.SLAB_USBtoUART --in=CC2530ZNP-Prod_mod.hex
-
-INFO: Found a CC2530 chip on /dev/cu.SLAB_USBtoUART
-
-Chip information:
-      Chip ID : 0xa524
-   Flash size : 256 Kb
-    Page size : 2 Kb
-    SRAM size : 8 Kb
-          USB : No
-Sections in CC2530ZNP-Prod_mod_1.2.hex:
-
- Addr.    Size
--------- -------------
- 0x0000   8176 B
- 0x1ff6   10 B
- 0x3fff0   1 B
- 0x2000   239616 B
-
-This is going to ERASE and REPROGRAM the chip. Are you sure? <y/N>: y
-
-Flashing:
- - Chip erase...
- - Flashing 4 memory blocks...
- -> 0x0000 : 8176 bytes
-    Progress 100%... OK
- -> 0x1ff6 : 10 bytes
-    Progress 100%... OK
- -> 0x3fff0 : 1 bytes
-    Progress 100%... OK
- -> 0x2000 : 239616 bytes
-    Progress 100%... OK
-
-Completed
 
 20. Add user zigbee
 
@@ -518,7 +432,7 @@ Enter the new value, or press ENTER for the default
 Is the information correct? [Y/n] y
 
  
-21. Install zigbee2mqtt 1.3
+21. Install zigbee2mqtt 1.7.1
 
 apt install -y git make g++ gcc python-dev
 
@@ -526,7 +440,6 @@ git clone https://github.com/Koenkk/zigbee2mqtt.git /home/zigbee/zigbee2mqtt
 
 cd /home/zigbee/zigbee2mqtt
 
-git checkout 00ebd44
 npm install
 
 sudo chown -R zigbee:zigbee /home/zigbee/zigbee2mqtt
@@ -534,7 +447,7 @@ sudo chown -R zigbee:zigbee /home/zigbee/zigbee2mqtt
 22. Configure zigbee2mqtt
 
 
-mv /home/zigbee/zigbee2mqtt/data/configuration.yaml /home/zigbee/zigbee2mqtt/data/configuration.yaml.old
+cp /home/zigbee/zigbee2mqtt/data/configuration.yaml /home/zigbee/zigbee2mqtt/data/configuration.yaml.old
 
 nano /home/zigbee/zigbee2mqtt/data/configuration.yaml
 
@@ -565,9 +478,10 @@ advanced:
   baudrate: 115200
   # Optional: RTS / CTS Hardware Flow Control for serial port
   rtscts: false
+
+Reference config:  
   
-  
-  # Home Assistant integration (MQTT discovery)
+# Home Assistant integration (MQTT discovery)
 homeassistant: false
 
 # allow new devices to join
@@ -582,8 +496,8 @@ mqtt:
   # MQTT server authentication, uncomment if required:
   # user: my_user
   # password: my_password
-  user: 'smarthome'
-  password: 'smarthome'
+  user: '*'
+  password: '*'
 
 # Serial settings
 serial:
