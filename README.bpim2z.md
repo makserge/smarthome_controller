@@ -4,9 +4,9 @@ Smarthome project based on Ubuntu 19.10 and BananaPi M2 Zero SBC
 
 Setup
 
-1. Download bpi-m2z-8GB-sd-ubuntu_eoan_kernel_fbdev_5.3.7.img.7z from
+1. Download bpi-m2z-8GB-sd-ubuntu_eoan_kernel_fbdev_5.3.11.img.7z from
 
-https://github.com/avafinger/bananapi-zero-ubuntu-base-minimal/releases/download/v2.5/bpi-m2z-8GB-sd-ubuntu_eoan_kernel_fbdev_5.3.7.img.7z
+https://github.com/avafinger/bananapi-zero-ubuntu-base-minimal/releases/download/v2.8/bpi-m2z-8GB-sd-ubuntu_eoan_kernel_fbdev_5.3.11.img.7z
 
 2. Flash using Etcher https://etcher.io or
 
@@ -16,26 +16,42 @@ Rufus http://rufus.akeo.ie/downloads/rufus-2.11p.exe
 
 ubuntu / ubuntu
 
-4. Setup Wi-Fi network
+4. Setup static IP for LAN
 
 sudo rfkill block 1
 
-sudo jed /etc/network/interfaces
+sudo jed /etc/netplan/01-netcfg.yaml
 
-update your network info like:
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    eth0:
+      dhcp4: no
+      # Ser IP address & subnet mask
+      addresses: [192.168.137.100/24]
+      # Set default gateway
+      gateway4: 192.168.137.1
+      nameservers:
+        # Set DNS name servers
+        addresses: [192.168.137.1,8.8.8.8]
+      dhcp6: no
+  wifis:
+    wlan0:
+      dhcp4: yes
+      access-points:
+        "my-router-name":
+          password: "<wifi password here in plain text>"	  
+	  
+sudo netplan apply
+sudo rfkill block 1
+  
+sudo apt purge network-manager
 
-iface eth0 inet static
-address 192.168.137.100
-netmask 255.255.255.0
-gateway 192.168.137.1
-dns-nameservers 8.8.8.8 8.8.4.4
-
-iface wlan0 inet dhcp
-wpa-ssid "your AP"
-wpa-psk "your ASCII passwd like 1234567890"
+sudo systemctl disable dhclient.service
+sudo systemctl enable networking
 
 sudo rfkill unblock 1
-
 sudo reboot
 
 5. Set new root password
@@ -88,14 +104,14 @@ apt install curl -y
 
 curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
 
-apt install -y nodejs
-apt install -y npm
-npm config set registry http://registry.npmjs.org/  
+apt install -y nodejs npm
+export NODE_TLS_REJECT_UNAUTHORIZED=0
+npm config set strict-ssl false
 npm install npm@latest -g
 
 11. Install Mosquitto
 
-apt install mosquitto
+apt install -y mosquitto
 
 mosquitto_passwd -c /etc/mosquitto/passwd smarthome
 Password:
@@ -167,15 +183,13 @@ TX   P02       13
 RX   P03       11
 
 
-15. Setup UART2, UART3, SPI0
+15. Setup UART2
 
 apt install device-tree-compiler
 
 cd /boot
 
-dtc -I dtb -O dts -o m2z.dts bpi-m2-zero-v4.dtb_4.20.17
-
-dtc -I dtb -O dts -o m2z.dts bpi-m2-zero-v4.dtb_5.3.7
+dtc -I dtb -O dts -o m2z.dts bpi-m2-zero-v4.dtb_5.3.11-fbdev
 
 nano m2z.dts
 
@@ -215,50 +229,8 @@ serial@1c28800 {
                 };
 
 
+dtc -I dts -O dtb -o bpi-m2-zero-v4.dtb_5.3.11-fbdev m2z.dts
 
-replace
-
- spi@1c68000 {
-                        compatible = "allwinner,sun8i-h3-spi";
-                        reg = < 0x1c68000 0x1000 >;
-                        interrupts = < 0x00 0x41 0x04 >;
-                        clocks = < 0x03 0x1e 0x03 0x52 >;
-                        clock-names = "ahb\0mod";
-                        dmas = < 0x15 0x17 0x15 0x17 >;
-                        dma-names = "rx\0tx";
-                        pinctrl-names = "default";
-                        pinctrl-0 = < 0x16 0x17 >;
-                        resets = < 0x03 0x0f >;
-                        status = "disabled";
-                        #address-cells = < 0x01 >;
-                        #size-cells = < 0x00 >;
-                        cs-gpios = < 0x0c 0x02 0x03 0x00 0x0c 0x00 0x06 0x00 >;
-
-
-
-to 
-
- spi@1c68000 {
-                        compatible = "allwinner,sun8i-h3-spi";
-                        reg = < 0x1c68000 0x1000 >;
-                        interrupts = < 0x00 0x41 0x04 >;
-                        clocks = < 0x03 0x1e 0x03 0x52 >;
-                        clock-names = "ahb\0mod";
-                        dmas = < 0x15 0x17 0x15 0x17 >;
-                        dma-names = "rx\0tx";
-                        pinctrl-names = "default";
-                        pinctrl-0 = < 0x16 0x17 >;
-                        resets = < 0x03 0x0f >;
-                        status = "okay";
-                        #address-cells = < 0x01 >;
-                        #size-cells = < 0x00 >;
-                        cs-gpios = < 0x0c 0x02 0x03 0x00 0x0c 0x00 0x06 0x00 >;
-
-
-
-dtc -I dts -O dtb -o bpi-m2-zero-v4.dtb_5.3.7 m2z.dts
-
-dtc -I dts -O dtb -o bpi-m2-zero-v4.dtb_4.20.17 m2z.dts
 
 nano /etc/rc.local
 
@@ -279,12 +251,13 @@ systemctl daemon-reload
 systemctl status rc-local
 
 ● rc-local.service - /etc/rc.local Compatibility
-   Loaded: loaded (/lib/systemd/system/rc-local.service; enabled-runtime; vendor
+   Loaded: loaded (/lib/systemd/system/rc-local.service; enabled-runtime; vendor preset: enabled)
   Drop-In: /usr/lib/systemd/system/rc-local.service.d
            └─debian.conf
-   Active: active (exited) since Fri 2019-10-25 02:16:09 EEST; 50s ago
+   Active: active (exited) since Sun 2019-12-01 00:04:03 EET; 2s ago
      Docs: man:systemd-rc-local-generator(8)
    CGroup: /system.slice/rc-local.service
+
 
  
 reboot
@@ -301,58 +274,91 @@ stty -F /dev/ttyS3
 speed 115200 baud; line = 0;
 -brkint -imaxbel
 
-17. Check SPI
-
-ls -l /dev/spi*
-crw------- 1 root root 153, 0 Oct 31 10:56 /dev/spidev0.0
-
-18. Connect OLED to SBC
+17. Connect OLED to SBC
 
 Pin		OLED	SBC
 
 +3.3V	VCC		+3.3V
 GND  	GND		GND
-DO		SCL		23
-DI		SDA		19
-RES		RST		7
-DC		DC		18
-CS		CS		24
+SCL		SCL		5
+SDA		SDA		3
 
-19. Install SPI OLED command line
+18. Install OLED status monitor
 
 git clone https://github.com/zhaolei/WiringOP.git -b h3 
 cd WiringOP
 chmod +x ./build
 sudo ./build
-
-mkdir /var/lib/bananapi
-echo "BOARD=bpi-m2z" >> /var/lib/bananapi/board.sh
-
-git clone https://github.com/BPI-SINOVOIP/BPI-WiringPi2
-cd BPI-WiringPi2
-chmod +x ./build
-./build
 cd ..
-
+ldconfig
 
 git clone https://github.com/nopnop2002/ssd1306_rpi.git
 cd ssd1306_rpi
 
-nano oled.c
-
-
-replace 
-
-#define RST  8  // You can change
-#define DC   7  // You can change
-
-to
-
-#define RST  7  // You can change
-#define DC   5  // You can change
-
-cc -o oled oled.c fontx.c -lwiringPi -lcrypt -lm -lrt -lpthread -DSPI  
+cc -o oled oled.c fontx.c -lwiringPi -lcrypt -lm -lrt -lpthread -DI2C  
 bash ./test.sh 
+
+wget https://raw.githubusercontent.com/makserge/smarthome_controller/master/pushbuttons.c
+
+gcc -lwiringPi -lcrypt -lm -lrt -lpthread -o pushbuttons pushbuttons.c
+./pushbuttons
+
+nano /usr/local/bin/run23release.sh
+
+#!/bin/bash
+
+cpuTemp=`cat /sys/devices/virtual/thermal/thermal_zone0/temp`
+cpuTempDegree=$((cpuTemp/1000))
+
+freeRAM=`free | grep Mem | awk '{print $4/$2 * 100.0}'`
+freeRAMRounded=`printf "%.1f" $freeRAM`
+
+usedSpace=`df --output=pcent / | awk -F'%' 'NR==2{print $1}'`
+freeSpace=$((100-$usedSpace))
+
+cd /root/ssd1306_rpi
+
+./oled r
+./oled +1 `hostname -I | cut -d' ' -f1` 
+./oled +2 "Temp: $cpuTempDegree"
+./oled +3 "Free RAM: $freeRAMRounded%"
+./oled +4 "Free space: $freeSpace%"
+./oled s
+sleep 10
+
+./oled r
+./oled s
+
+
+chmod +x /usr/local/bin/run23release.sh
+
+nano /usr/local/bin/run23short.sh
+#!/bin/bash
+
+chmod +x /usr/local/bin/run23short.sh
+
+
+nano /etc/systemd/system/pushbuttons.service
+
+[Unit]
+Description=pushbuttons
+After=network.target
+
+[Service]
+ExecStart=/root/pushbuttons
+WorkingDirectory=/root
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+sudo systemctl start pushbuttons
+sudo systemctl enable pushbuttons.service
 
 17. Add user zigbee
 
@@ -378,10 +384,7 @@ Is the information correct? [Y/n] y
  
 18. Install zigbee2mqtt
 
-npm install -g -y node-gyp
 apt install -y git make g++ gcc python-dev
-npm config set strict-ssl false
-set NODE_TLS_REJECT_UNAUTHORIZED=0
 
 19. Login as zigbee user
 
@@ -389,7 +392,6 @@ git clone https://github.com/Koenkk/zigbee2mqtt.git /home/zigbee/zigbee2mqtt
 
 cd /home/zigbee/zigbee2mqtt
 
-npm install @serialport/bindings@2.0.8
 npm install
 
 20. Configure zigbee2mqtt

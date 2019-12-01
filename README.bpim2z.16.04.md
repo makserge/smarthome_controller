@@ -6,6 +6,8 @@ Setup
 
 1. Download bpi-m2z-8GB-sd.img.7z from
 
+https://github.com/avafinger/bananapi-zero-ubuntu-base-minimal/releases/download/v15/bpi-m2z-8GB-sd.img.7z
+
 https://github-production-release-asset-2e65be.s3.amazonaws.com/112836752/da740980-aa64-11e9-8d6c-ed0c346736e0?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20191101%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20191101T001337Z&X-Amz-Expires=300&X-Amz-Signature=bf6212f0b53e210340b8daf3cbab7129b48ec42403f915aaeaee04fa9df402df&X-Amz-SignedHeaders=host&actor_id=16000579&response-content-disposition=attachment%3B%20filename%3Dbpi-m2z-8GB-sd.img.7z&response-content-type=application%2Foctet-stream
 
 2. Flash using Etcher https://etcher.io or
@@ -84,7 +86,7 @@ apt install -y nodejs
 
 11. Install Mosquitto
 
-apt install mosquitto
+apt install mosquitto -y
 
 mosquitto_passwd -c /etc/mosquitto/passwd smarthome
 Password:
@@ -100,30 +102,7 @@ systemctl restart mosquitto
 
 12. Install Node-red
 
-adduser node-red
-
-Adding user `node-red' ...
-Adding new group `node-red' (1002) ...
-Adding new user `node-red' (1002) with group `node-red' ...
-Creating home directory `/home/node-red' ...
-Copying files from `/etc/skel' ...
-Enter new UNIX password:
-Retype new UNIX password:
-passwd: password updated successfully
-Changing the user information for node-red
-Enter the new value, or press ENTER for the default
-        Full Name []:
-        Room Number []:
-        Work Phone []:
-        Home Phone []:
-        Other []:
-Is the information correct? [Y/n] y
-
-usermod -aG sudo node-red
-
-
-As node-red user
-sudo npm install -g --unsafe-perm node-red node-red-admin
+sudo npm install -g --unsafe-perm node-red node-red-admin 
 
 sudo npm install -g pm2
 sudo pm2 start /usr/bin/node-red
@@ -133,9 +112,7 @@ sudo pm2 startup
 node-red-admin hash-pw
 Password:
 
-sudo chown -R node-red.node-red .node-red
-
-nano /home/node-red/.node-red/settings.js
+nano /root/.node-red/settings.js
 
 replace
 
@@ -161,9 +138,9 @@ adminAuth: {
     }]
 },
 
-apt install ufw
+apt install ufw -y
 ufw allow 1880
-shutdown -r now
+reboot
 
 13. Open Node-Red dashboard
 http://192.168.43.253:1880
@@ -270,7 +247,7 @@ before
 exit 0
 
  
-shutdown -r now
+reboot
 
 16. Check UART2, UART3
 
@@ -295,16 +272,20 @@ SDA		SDA		3
 
 18. Install OLED status monitor
 
+apt install git -y
 git clone https://github.com/zhaolei/WiringOP.git -b h3 
 cd WiringOP
 chmod +x ./build
 sudo ./build
+cd ..
+ldconfig
 
 git clone https://github.com/nopnop2002/ssd1306_rpi.git
 cd ssd1306_rpi
 
 cc -o oled oled.c fontx.c -lwiringPi -lcrypt -lm -lrt -lpthread -DI2C  
 bash ./test.sh 
+cd ..
 
 wget https://raw.githubusercontent.com/makserge/smarthome_controller/master/pushbuttons.c
 
@@ -328,7 +309,7 @@ cd /root/ssd1306_rpi
 
 ./oled r
 ./oled +1 `hostname -I | cut -d' ' -f1` 
-./oled +2 "Temp: $cpuTempDegree"
+./oled +2 "Temp: $cpuTempDegree C"
 ./oled +3 "Free RAM: $freeRAMRounded%"
 ./oled +4 "Free space: $freeSpace%"
 ./oled s
@@ -364,9 +345,8 @@ User=root
 WantedBy=multi-user.target
 
 
-
-sudo systemctl start pushbuttons
-sudo systemctl enable pushbuttons.service
+systemctl start pushbuttons
+systemctl enable pushbuttons.service
 
 19. Flash E18-MS1PA1-IPX Zigbee CC2530 2.4Ghz 100mW IPX Antenna IoT uhf Wireless Transceiver 2.4g Transmitter Receiver Module CC2530 PA
 https://www.aliexpress.com/item/32640770110.html
@@ -442,12 +422,9 @@ cd /home/zigbee/zigbee2mqtt
 
 npm install
 
-sudo chown -R zigbee:zigbee /home/zigbee/zigbee2mqtt
+chown -R zigbee:zigbee /home/zigbee/zigbee2mqtt
 
 22. Configure zigbee2mqtt
-
-
-cp /home/zigbee/zigbee2mqtt/data/configuration.yaml /home/zigbee/zigbee2mqtt/data/configuration.yaml.old
 
 nano /home/zigbee/zigbee2mqtt/data/configuration.yaml
 
@@ -520,24 +497,24 @@ npm start
 
 When started successfully, you will see:
 
-  zigbee2mqtt:info 2018-11-17 18:13:34 Logging to directory: '/home/zigbee/zigbee2mqtt/data/log/2018-11-17.18-13-34'
-  zigbee2mqtt:debug 2018-11-17 18:13:35 Using zigbee-shepherd with settings: '{"net":{"panId":6754,"channelList":[11]},"dbPath":"/home/zigbee/zigbee2mqtt/data/database.db","sp":{"baudRate":115200,"rtscts":false}}'
-  zigbee2mqtt:debug 2018-11-17 18:13:35 Can't load state from file /home/zigbee/zigbee2mqtt/data/state.json (doesn't exsist)
-  zigbee2mqtt:info 2018-11-17 18:13:35 Starting zigbee2mqtt version 0.2.0 (commit #b0d3c2f)
-  zigbee2mqtt:info 2018-11-17 18:13:35 Starting zigbee-shepherd
-  zigbee2mqtt:info 2018-11-17 18:13:36 zigbee-shepherd started
-  zigbee2mqtt:info 2018-11-17 18:13:36 Coordinator firmware version: '20182308'
-  zigbee2mqtt:debug 2018-11-17 18:13:36 zigbee-shepherd info: {"enabled":true,"net":{"state":"Coordinator","channel":11,"panId":"0x1a62","extPanId":"0xdddddddddddddddd","ieeeAddr":"0x00124b0013def197","nwkAddr":0},"firmware":{"transportrev":2,"product":0,"version":"2.6.3","revision":20182308},"startTime":1542478416,"joinTimeLeft":0}
-  zigbee2mqtt:info 2018-11-17 18:13:36 Currently 0 devices are joined:
-  zigbee2mqtt:warn 2018-11-17 18:13:36 `permit_join` set to  `true` in configuration.yaml.
-  zigbee2mqtt:warn 2018-11-17 18:13:36 Allowing new devices to join.
-  zigbee2mqtt:warn 2018-11-17 18:13:36 Set `permit_join` to `false` once you joined all devices.
-  zigbee2mqtt:info 2018-11-17 18:13:36 Zigbee: allowing new devices to join.
-  zigbee2mqtt:info 2018-11-17 18:13:36 Connecting to MQTT server at mqtt://localhost
-  zigbee2mqtt:info 2018-11-17 18:13:36 zigbee-shepherd ready
-  zigbee2mqtt:info 2018-11-17 18:13:36 Connected to MQTT server
-  zigbee2mqtt:info 2018-11-17 18:13:36 MQTT publish, topic: 'zigbee2mqtt/bridge/state', payload: 'online'
-  zigbee2mqtt:debug 2018-11-17 18:13:36 Soft reset timeout disabled
+zigbee2mqtt:info  2019-12-01T16:03:07: Logging to directory: '/home/zigbee/zigbee2mqtt/data/log/2019-12-01.18-03-05'
+zigbee2mqtt:debug 2019-12-01T16:03:07: Loaded state from file /home/zigbee/zigbee2mqtt/data/state.json
+zigbee2mqtt:info  2019-12-01T16:03:07: Starting zigbee2mqtt version 1.7.1 (commit #b459c35)
+zigbee2mqtt:info  2019-12-01T16:03:07: Starting zigbee-herdsman...
+zigbee2mqtt:debug 2019-12-01T16:03:07: Using zigbee-herdsman with settings: '{"network":{"panID":6754,"extendedPanID":[221,221,221,221,221,221,221,221],"channelList":[11],"networkKey":"HIDDEN"},"databasePath":"/home/zigbee/zigbee2mqtt/data/database.db","databaseBackupPath":"/home/zigbee/zigbee2mqtt/data/database.db.backup","backupPath":"/home/zigbee/zigbee2mqtt/data/coordinator_backup.json","serialPort":{"baudRate":115200,"rtscts":false,"path":"/dev/ttyS2"}}'
+zigbee2mqtt:info  2019-12-01T16:03:10: zigbee-herdsman started
+zigbee2mqtt:info  2019-12-01T16:03:10: Coordinator firmware version: '{"type":"zStack12","meta":{"transportrev":2,"product":0,"majorrel":2,"minorrel":6,"maintrel":3,"revision":20190109}}'
+zigbee2mqtt:debug 2019-12-01T16:03:10: Zigbee network parameters: {"panID":6754,"extendedPanID":"0xdddddddddddddddd","channel":11}
+zigbee2mqtt:info  2019-12-01T16:03:10: Currently 0 devices are joined:
+zigbee2mqtt:warn  2019-12-01T16:03:10: `permit_join` set to  `true` in configuration.yaml.
+zigbee2mqtt:warn  2019-12-01T16:03:10: Allowing new devices to join.
+zigbee2mqtt:warn  2019-12-01T16:03:10: Set `permit_join` to `false` once you joined all devices.
+zigbee2mqtt:info  2019-12-01T16:03:10: Zigbee: allowing new devices to join.
+zigbee2mqtt:info  2019-12-01T16:03:10: Connecting to MQTT server at mqtt://localhost
+zigbee2mqtt:info  2019-12-01T16:03:10: Connected to MQTT server
+zigbee2mqtt:info  2019-12-01T16:03:10: MQTT publish: topic 'zigbee2mqtt/bridge/state', payload 'online'
+zigbee2mqtt:info  2019-12-01T16:03:10: MQTT publish: topic 'zigbee2mqtt/bridge/config', payload '{"version":"1.7.1","commit":"b459c35","coordinator":{"type":"zStack12","meta":{"transportrev":2,"product":0,"majorrel":2,"minorrel":6,"maintrel":3,"revision":20190109}},"log_level":"debug","permit_join":true}'zigbee2mqtt:info  2019-12-01T16:01:50: MQTT publish: topic 'zigbee2mqtt/bridge/c                     onfig', payload '{"version":"1.7.1","commit":"b459c35","coordinator":{"type":"zS                     tack12","meta":{"transportrev":2,"product":0,"majorrel":2,"minorrel":6,"maintrel                     ":3,"revision":20190109}},"log_level":"debug","permit_join":true}'
+
 
 24. Setup zigbee2mqtt as a daemon as root
 
@@ -597,11 +574,3 @@ sudo systemctl start zigbee2mqtt
 # View the log of zigbee2mqtt
 sudo journalctl -u zigbee2mqtt.service -f
 
-25. 
-For the current CPU speed one can dynamically watch this change in real time using:
-
-sudo watch -n 1  cat /sys/devices/system/cpu/cpu*/cpufreq/cpuinfo_cur_freq
-
-and temperature
-
-cat /sys/devices/virtual/thermal/thermal_zone0/temp
