@@ -239,7 +239,7 @@ add
 
 stty -F /dev/ttyS2 115200
 chmod 666 /dev/ttyS2
-stty -F /dev/ttyS3 115200
+stty -F /dev/ttyS3 9600
 chmod 666 /dev/ttyS3
 
 before
@@ -258,7 +258,7 @@ speed 115200 baud; line = 0;
 
 stty -F /dev/ttyS3
 
-speed 115200 baud; line = 0;
+speed 9600 baud; line = 0;
 -brkint -imaxbel
 
 17. Connect OLED to SBC
@@ -325,6 +325,28 @@ nano /usr/local/bin/run23short.sh
 #!/bin/bash
 
 chmod +x /usr/local/bin/run23short.sh
+
+
+nano /usr/local/bin/run25release.sh
+
+#!/bin/bash
+
+cd /root/ssd1306_rpi
+
+./oled r
+./oled +1 "Rebooting..."
+
+shutdown -r now 
+
+
+chmod +x /usr/local/bin/run25release.sh
+
+nano /usr/local/bin/run25short.sh
+#!/bin/bash
+
+chmod +x /usr/local/bin/run25short.sh
+
+
 
 
 nano /etc/systemd/system/pushbuttons.service
@@ -574,3 +596,84 @@ sudo systemctl start zigbee2mqtt
 # View the log of zigbee2mqtt
 sudo journalctl -u zigbee2mqtt.service -f
 
+25. Setup watchdog
+
+nano /root/blink.sh
+
+
+#!/bin/sh -e
+
+PIN=24
+
+gpio mode $PIN out
+
+while true; do
+  gpio write $PIN 1
+  sleep 0.5
+  gpio write $PIN 0
+  sleep 0.5
+done
+
+chmod +x /root/blink.sh
+
+nano /etc/systemd/system/watchdogblink.service
+
+[Unit]
+Description=watchdogblink
+After=network.target
+
+[Service]
+ExecStart=/root/blink.sh
+WorkingDirectory=/root
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+Start daemon
+
+sudo systemctl start watchdogblink
+
+Verify
+
+systemctl status watchdogblink.service
+
+● watchdogblink.service - watchdogblink
+   Loaded: loaded (/etc/systemd/system/watchdogblink.service; disabled; vendor preset: enabled)
+   Active: active (running) since Sat 2020-01-18 13:49:41 EET; 17s ago
+ Main PID: 3648 (blink.sh)
+   CGroup: /system.slice/watchdogblink.service
+           ├─3648 /bin/sh -e /root/blink.sh
+           └─3720 sleep 0.5
+
+Jan 18 13:49:41 bpi-m2z systemd[1]: Started watchdogblink.
+
+Enable
+
+sudo systemctl enable watchdogblink.service
+
+26. Setup RTC
+
+hwclock -f /dev/rtc1 -w
+
+nano /etc/rc.local
+
+add before 
+exit 0
+
+echo ds3231 0x68 > /sys/class/i2c-adapter/i2c-0/new_device
+hwclock -f /dev/rtc1 -s
+
+
+crontab -e
+
+0 0 * * * timedatectl --adjust-system-clock; sudo hwclock -w
+
+27. Setup NodeRed serial
+
+npm install --no-audit --no-update-notifier --save --save-prefix="~" --production node-red-contrib-modbus@5.2.0
