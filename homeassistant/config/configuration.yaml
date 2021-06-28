@@ -1,0 +1,40 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+sensor: !include sensors.yaml
+
+mqtt:
+  discovery: true
+  broker: 127.0.0.1
+  will_message:
+    topic: 'homeassistant/status'
+    payload: 'offline'
+
+modbus:
+  name: modbus
+  type: serial
+  baudrate: 9600
+  bytesize: 8
+  method: rtu
+  parity: N
+  port: /dev/ttyS3
+  stopbits: 1
+  lights:
+      - name: Light 4
+        slave: 21
+        address: 3
+        write_type: coil
+
+
+
+
+

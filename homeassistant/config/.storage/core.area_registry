@@ -1,0 +1,20 @@
+{
+    "version": 1,
+    "key": "core.area_registry",
+    "data": {
+        "areas": [
+            {
+                "name": "\u0413\u043e\u0441\u0442\u0438\u043d\u0430\u044f",
+                "id": "gostinaia"
+            },
+            {
+                "name": "\u041a\u0443\u0445\u043d\u044f",
+                "id": "kukhnia"
+            },
+            {
+                "name": "\u0421\u043f\u0430\u043b\u044c\u043d\u044f",
+                "id": "spalnia"
+            }
+        ]
+    }
+}

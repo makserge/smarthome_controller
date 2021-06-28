@@ -1,0 +1,65 @@
+{
+    "version": 1,
+    "key": "lovelace",
+    "data": {
+        "config": {
+            "title": "Home Assistant",
+            "views": [
+                {
+                    "path": "default_view",
+                    "title": "Home",
+                    "cards": [
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "binary_sensor.updater"
+                            ],
+                            "title": "Binary sensor"
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "person.admin"
+                            ],
+                            "title": "Person"
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "sensor.miwifi_router_b_received",
+                                "sensor.miwifi_router_b_sent",
+                                "sensor.miwifi_router_kib_s_received",
+                                "sensor.miwifi_router_kib_s_sent",
+                                "sensor.miwifi_router_packets_received",
+                                "sensor.miwifi_router_packets_sent",
+                                "sensor.miwifi_router_packets_s_received",
+                                "sensor.miwifi_router_packets_s_sent"
+                            ],
+                            "title": "Sensor"
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "sun.sun"
+                            ],
+                            "title": "Sun"
+                        },
+                        {
+                            "type": "entities",
+                            "entities": [
+                                "sensor.kitchen_temp_humidity_temperature",
+                                "sensor.kitchen_temp_humidity_humidity"
+                            ],
+                            "title": "Kitchen",
+                            "state_color": false
+                        },
+                        {
+                            "type": "light",
+                            "entity": "light.light_4"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

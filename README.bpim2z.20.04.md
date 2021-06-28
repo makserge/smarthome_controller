@@ -677,17 +677,8 @@ click sensor.kitchen_temp_humidity_humidity and set
 
 friendly_name: Humidity
 /*
-nano /opt/homeassistant/config/configuration.yaml
- 
-add 
 
-sensor: !include sensors.yaml
-
-after 
-scene: !include scenes.yaml
-
-
-nano /opt/homeassistant/config/sensor.yaml
+nano /opt/homeassistant/config/sensors.yaml
 
 
 sensor:
@@ -706,6 +697,99 @@ sensor:
       availability_topic: "zigbee2mqtt/bridge/state"
       device_class: "humidity"
 
-chown homeassistant.nogroup sensor.yaml
 systemctl restart hass 
 */
+
+40. Configure Modbus RTU
+
+nano /opt/homeassistant/config/configuration.yaml
+ 
+add 
+
+sensor: !include sensors.yaml
+
+after 
+scene: !include scenes.yaml
+
+add
+
+modbus:
+  name: modbus
+  type: serial
+  baudrate: 9600
+  bytesize: 8
+  method: rtu
+  parity: N
+  port: /dev/ttyS3
+  stopbits: 1
+
+nano /opt/homeassistant/config/sensors.yaml  
+
+chown homeassistant.nogroup sensors.yaml
+
+41. Add light switch
+
+
+modbus:
+  name: modbus
+  type: serial
+  baudrate: 9600
+  bytesize: 8
+  method: rtu
+  parity: N
+  port: /dev/ttyS3
+  stopbits: 1
+  lights:
+      - name: Light 4
+        slave: 21
+        address: 3
+        write_type: coil
+
+
+
+
+Edit dashboard->Add card->By Entity->Select "Light 4"->Continue->Add to lovelace UI	
+
+41. Add switch
+
+modbus:
+  name: modbus
+  type: serial
+  baudrate: 9600
+  bytesize: 8
+  method: rtu
+  parity: N
+  port: /dev/ttyS3
+  stopbits: 1
+  switches:
+      - name: Switch 4
+        slave: 21
+        address: 3
+        write_type: coil
+		
+Edit dashboard->Add card->By Entity->Select "Switch 4"->Continue->Add to lovelace UI
+
+42. Add binary sensor
+
+modbus:
+  name: modbus
+  type: serial
+  baudrate: 9600
+  bytesize: 8
+  method: rtu
+  parity: N
+  port: /dev/ttyS3
+  stopbits: 1
+  binary_sensors:
+    - name: "binary_sensor1"
+      address: 3
+      scan_interval: 5
+      slave: 21
+	  
+	  
+43. Setup Modbus CLI
+ 
+pip install modbus_cli	
+
+modbus -s 21 -b 9600 -p 1 -P n -v /dev/ttyS3 1 c@3 = read coil at address 3
+

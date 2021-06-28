@@ -1,0 +1,93 @@
+{
+    "version": 1,
+    "key": "auth",
+    "data": {
+        "users": [
+            {
+                "id": "9c8e0d7361f8479c94901f7cd1edc7bb",
+                "group_ids": [
+                    "system-admin"
+                ],
+                "is_owner": true,
+                "is_active": true,
+                "name": "Admin",
+                "system_generated": false
+            }
+        ],
+        "groups": [
+            {
+                "id": "system-admin",
+                "name": "Administrators"
+            },
+            {
+                "id": "system-users",
+                "name": "Users"
+            },
+            {
+                "id": "system-read-only",
+                "name": "Read Only"
+            }
+        ],
+        "credentials": [
+            {
+                "id": "18eca924f5454d41805ab0d5d8702658",
+                "user_id": "9c8e0d7361f8479c94901f7cd1edc7bb",
+                "auth_provider_type": "homeassistant",
+                "auth_provider_id": null,
+                "data": {
+                    "username": "admin"
+                }
+            }
+        ],
+        "refresh_tokens": [
+            {
+                "id": "dd08d56b0aeb489d86906bd29cd3f31a",
+                "user_id": "9c8e0d7361f8479c94901f7cd1edc7bb",
+                "client_id": "http://192.168.31.138:8123/",
+                "client_name": null,
+                "client_icon": null,
+                "token_type": "normal",
+                "created_at": "2021-06-25T22:55:06.377442+00:00",
+                "access_token_expiration": 1800.0,
+                "token": "1b3852bc1772c03efb6c1a0998014ee7bbb8c472ab11bb5ce09d16741aa3bd1f02e02cde2bcbd7b1b6555e513f5f621f751249dc39f51094d917d739d4bdd81a",
+                "jwt_key": "499fdf5c4c12573b705af7ab720ec4649ce3c89978b0321887b708af71ecb63af3c81cade587a953e6a73b13bbbfb313a5c54fa04716a8f8e2d88d81c2cc49db",
+                "last_used_at": "2021-06-25T22:55:06.378471+00:00",
+                "last_used_ip": "192.168.31.103",
+                "credential_id": "18eca924f5454d41805ab0d5d8702658",
+                "version": "2021.6.6"
+            },
+            {
+                "id": "2835967345b5447ab62ce9f541742a71",
+                "user_id": "9c8e0d7361f8479c94901f7cd1edc7bb",
+                "client_id": "http://192.168.31.138:8123/",
+                "client_name": null,
+                "client_icon": null,
+                "token_type": "normal",
+                "created_at": "2021-06-25T22:58:13.245954+00:00",
+                "access_token_expiration": 1800.0,
+                "token": "a9978a9a8fdf661c86dfe8cf3fa39be6604d39f23a9d07c7774eb9b0e99dcee52208114b99abb6a2fe29c1b3e7402e630f0cc69dd8d8baa783b87dffbd51f8dd",
+                "jwt_key": "40100fd225cfda0d081c0dac68ddfea6c8e9617f89719019de98486ac6ac142077b6ee37196c94a36bebf4d0b73efe0c5d2bd665af639c3f4bf8706df5c3ad0f",
+                "last_used_at": "2021-06-25T22:58:13.246975+00:00",
+                "last_used_ip": "192.168.31.103",
+                "credential_id": "18eca924f5454d41805ab0d5d8702658",
+                "version": "2021.6.6"
+            },
+            {
+                "id": "86ac39c5a24341b98ec6d25c6db2de11",
+                "user_id": "9c8e0d7361f8479c94901f7cd1edc7bb",
+                "client_id": "http://192.168.31.138:8123/",
+                "client_name": null,
+                "client_icon": null,
+                "token_type": "normal",
+                "created_at": "2021-06-25T23:00:44.578249+00:00",
+                "access_token_expiration": 1800.0,
+                "token": "8dc494f43dafd22f933e526664d25f3be094762186f24dc621cab540b7f1015a9dc542a642a473f1a8df26211408a1c24c61e278e8fcd7f63e77148559847f1f",
+                "jwt_key": "650515c0762c9a8415f048e13ce672e29068d259cd9cdc354b2f80ab62dba61acec3dc209032a9e6acc4e822814d50dbfd073f271043db398e08224d1b5c694a",
+                "last_used_at": "2021-06-28T19:53:28.007646+00:00",
+                "last_used_ip": "192.168.31.103",
+                "credential_id": "18eca924f5454d41805ab0d5d8702658",
+                "version": "2021.6.6"
+            }
+        ]
+    }
+}

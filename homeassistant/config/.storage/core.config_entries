@@ -1,0 +1,56 @@
+{
+    "version": 1,
+    "key": "core.config_entries",
+    "data": {
+        "entries": [
+            {
+                "entry_id": "d7ba5c8c4bd590d7bf14f2b0a28cab7d",
+                "version": 1,
+                "domain": "upnp",
+                "title": "MiWiFi router",
+                "data": {
+                    "udn": "uuid:a9b88401-886c-4ea2-8ac7-eeb4ea7a6a09",
+                    "st": "urn:schemas-upnp-org:device:InternetGatewayDevice:1",
+                    "hostname": "192.168.31.1"
+                },
+                "options": {},
+                "pref_disable_new_entities": false,
+                "pref_disable_polling": false,
+                "source": "ssdp",
+                "unique_id": "uuid:a9b88401-886c-4ea2-8ac7-eeb4ea7a6a09::urn:schemas-upnp-org:device:InternetGatewayDevice:1",
+                "disabled_by": null
+            },
+            {
+                "entry_id": "c89a261745ff16e2ae69ed9b2d84cd8b",
+                "version": 1,
+                "domain": "mqtt",
+                "title": "configuration.yaml",
+                "data": {
+                    "broker": "127.0.0.1",
+                    "port": 1883,
+                    "password": "smarthome",
+                    "username": "smarthome",
+                    "birth_message": {
+                        "topic": "homeassistant/status",
+                        "payload": "online",
+                        "qos": 0,
+                        "retain": false
+                    },
+                    "will_message": {
+                        "topic": "homeassistant/status",
+                        "payload": "offline",
+                        "qos": 0,
+                        "retain": false
+                    },
+                    "discovery": true
+                },
+                "options": {},
+                "pref_disable_new_entities": false,
+                "pref_disable_polling": false,
+                "source": "import",
+                "unique_id": null,
+                "disabled_by": null
+            }
+        ]
+    }
+}
