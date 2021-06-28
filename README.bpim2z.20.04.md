@@ -312,7 +312,8 @@ Enter the new value, or press ENTER for the default
         Other []:
 Is the information correct? [Y/n] y
 
-22. Install zigbee2mqtt 1.19.1
+22. Install zigbee2mqtt 1.7.1
+git clone --depth 1 --branch 1.7.1 https://github.com/Koenkk/zigbee2mqtt.git /home/zigbee/zigbee2mqtt
 
 git clone https://github.com/Koenkk/zigbee2mqtt.git /home/zigbee/zigbee2mqtt
 
@@ -395,25 +396,27 @@ npm start
 
 When started successfully, you will see:
 
-Zigbee2MQTT:debug 2021-06-27 21:59:37: Can't load state from file /home/zigbee/zigbee2mqtt/data/state.json (doesn't exist)
-Zigbee2MQTT:info  2021-06-27 21:59:37: Logging to console and directory: '/home/zigbee/zigbee2mqtt/data/log/2021-06-27.21-59-31' filename: log.txt
-Zigbee2MQTT:info  2021-06-27 21:59:38: Starting Zigbee2MQTT version 1.19.1 (commit #9bd46932)
-Zigbee2MQTT:info  2021-06-27 21:59:38: Starting zigbee-herdsman (0.13.111)
-Zigbee2MQTT:debug 2021-06-27 21:59:38: Using zigbee-herdsman with settings: '{"adapter":{"concurrent":null,"delay":null,"disableLED":false},"backupPath":"/home/zigbee/zigbee2mqtt/data/coordinator_backup.json","databaseBackupPath":"/home/zigbee/zigbee2mqtt/data/database.db.backup","databasePath":"/home/zigbee/zigbee2mqtt/data/database.db","network":{"channelList":[11],"extendedPanID":[221,221,221,221,221,221,221,221],"networkKey":"HIDDEN","panID":6754},"serialPort":{"baudRate":115200,"path":"/dev/ttyS2","rtscts":false}}'
-Zigbee2MQTT:info  2021-06-27 21:59:43: zigbee-herdsman started
-Zigbee2MQTT:info  2021-06-27 21:59:43: Coordinator firmware version: '{"meta":{"maintrel":3,"majorrel":2,"minorrel":6,"product":0,"revision":20190109,"transportrev":2},"type":"zStack12"}'
-Zigbee2MQTT:debug 2021-06-27 21:59:43: Zigbee network parameters: {"channel":11,"extendedPanID":"0xdddddddddddddddd","panID":6754}
-Zigbee2MQTT:info  2021-06-27 21:59:43: Currently 0 devices are joined:
-Zigbee2MQTT:warn  2021-06-27 21:59:43: `permit_join` set to  `true` in configuration.yaml.
-Zigbee2MQTT:warn  2021-06-27 21:59:43: Allowing new devices to join.
-Zigbee2MQTT:warn  2021-06-27 21:59:43: Set `permit_join` to `false` once you joined all devices.
-Zigbee2MQTT:info  2021-06-27 21:59:43: Zigbee: allowing new devices to join.
-Zigbee2MQTT:error 2021-06-27 21:59:50: Failed to set permit join to true
-Zigbee2MQTT:info  2021-06-27 21:59:50: Connecting to MQTT server at mqtt://localhost
-Zigbee2MQTT:debug 2021-06-27 21:59:50: Using MQTT login with username: smarthome
-Zigbee2MQTT:info  2021-06-27 21:59:50: Connected to MQTT server
-Zigbee2MQTT:info  2021-06-27 21:59:50: MQTT publish: topic 'zigbee2mqtt/bridge/state', payload 'online'
-Zigbee2MQTT:info  2021-06-27 21:59:51: MQTT publish: topic 'zigbee2mqtt/bridge/config', payload '{"commit":"9bd46932","coordinator":{"meta":{"maintrel":3,"majorrel":2,"minorrel":6,"product":0,"revision":20190109,"transportrev":2},"type":"zStack12"},"log_level":"debug","network":{"channel":11,"extendedPanID":"0xdddddddddddddddd","panID":6754},"permit_join":false,"version":"1.19.1"}'
+
+                Zigbee2mqtt requires node version 10, you are running v14.17.1!
+
+zigbee2mqtt:info  2021-06-28T10:28:01: Logging to directory: '/home/zigbee/zigbee2mqtt/data/log/2021-06-28.13-27-59'
+zigbee2mqtt:debug 2021-06-28T10:28:01: Loaded state from file /home/zigbee/zigbee2mqtt/data/state.json
+zigbee2mqtt:info  2021-06-28T10:28:01: Starting zigbee2mqtt version 1.7.1 (commit #b459c35)
+zigbee2mqtt:info  2021-06-28T10:28:01: Starting zigbee-herdsman...
+zigbee2mqtt:debug 2021-06-28T10:28:01: Using zigbee-herdsman with settings: '{"network":{"panID":6754,"extendedPanID":[221,221,221,221,221,221,221,221],"channelList":[11],"networkKey":"HIDDEN"},"databasePath":"/home/zigbee/zigbee2mqtt/data/database.db","databaseBackupPath":"/home/zigbee/zigbee2mqtt/data/database.db.backup","backupPath":"/home/zigbee/zigbee2mqtt/data/coordinator_backup.json","serialPort":{"baudRate":115200,"rtscts":false,"path":"/dev/ttyS2"}}'
+zigbee2mqtt:info  2021-06-28T10:28:03: zigbee-herdsman started
+zigbee2mqtt:info  2021-06-28T10:28:03: Coordinator firmware version: '{"type":"zStack12","meta":{"transportrev":2,"product":0,"majorrel":2,"minorrel":6,"maintrel":3,"revision":20190109}}'
+zigbee2mqtt:debug 2021-06-28T10:28:03: Zigbee network parameters: {"panID":6754,"extendedPanID":"0xdddddddddddddddd","channel":11}
+zigbee2mqtt:info  2021-06-28T10:28:03: Currently 1 devices are joined:
+zigbee2mqtt:info  2021-06-28T10:28:03: kitchen_temp_humidity (0x00158d00020b824a): WSDCGQ01LM - Xiaomi MiJia temperature & humidity sensor (EndDevice)
+zigbee2mqtt:warn  2021-06-28T10:28:03: `permit_join` set to  `true` in configuration.yaml.
+zigbee2mqtt:warn  2021-06-28T10:28:03: Allowing new devices to join.
+zigbee2mqtt:warn  2021-06-28T10:28:03: Set `permit_join` to `false` once you joined all devices.
+zigbee2mqtt:info  2021-06-28T10:28:03: Zigbee: allowing new devices to join.
+zigbee2mqtt:info  2021-06-28T10:28:03: Connecting to MQTT server at mqtt://localhost
+zigbee2mqtt:info  2021-06-28T10:28:04: Connected to MQTT server
+zigbee2mqtt:info  2021-06-28T10:28:04: MQTT publish: topic 'zigbee2mqtt/bridge/state', payload 'online'
+zigbee2mqtt:info  2021-06-28T10:28:04: MQTT publish: topic 'zigbee2mqtt/bridge/config', payload '{"version":"1.7.1","commit":"b459c35","coordinator":{"type":"zStack12","meta":{"transportrev":2,"product":0,"majorrel":2,"minorrel":6,"maintrel":3,"revision":20190109}},"log_level":"debug","permit_join":true}'
 
 
 25. Setup zigbee2mqtt as a daemon as root
@@ -628,5 +631,81 @@ systemctl status hass
 
 https://www.home-assistant.io/getting-started/onboarding/
 
+39. Setup zigbee2mqtt integration
+
+nano /opt/homeassistant/config/configuration.yaml
+ 
+add 
+ 
+mqtt:
+  discovery: true
+  broker: 127.0.0.1
+  will_message:
+    topic: 'homeassistant/status'
+    payload: 'offline'
+
+systemctl stop hass
+systemctl start hass
+
+Open
+http://xxx.xxx.xxx.xxx:8123/config/integrations
+
+Configure->Re-configure MQTT->Set username and password->Next->Submit->Finish
+
+40. Configure Zigbee temperature and humidity sensor
+
+http://xxx.xxx.xxx.xxx:8123/config/mqtt
+
+Listen to a topic zigbee2mqtt/kitchen_temp_humidity
+
+Check if something like this was received
+
+Message 0 received on zigbee2mqtt/kitchen_temp_humidity at 1:44 PM:
+{
+    "battery": 100,
+    "voltage": 3025,
+    "temperature": 29.33,
+    "humidity": 46.63,
+    "linkquality": 148
+}
+Edit Dashboard->Unused entries->Check "kitchen_temp_humidity_temperature" and "kitchen_temp_humidity_humidity"->Add card
+Developer->click "kitchen_temp_humidity_temperature" and set
+
+friendly_name: Temperature
+
+click sensor.kitchen_temp_humidity_humidity and set
+
+friendly_name: Humidity
+/*
+nano /opt/homeassistant/config/configuration.yaml
+ 
+add 
+
+sensor: !include sensors.yaml
+
+after 
+scene: !include scenes.yaml
 
 
+nano /opt/homeassistant/config/sensor.yaml
+
+
+sensor:
+    - platform: mqtt
+      name: 'Kitchen temperature'
+      state_topic: 'zigbee2mqtt/kitchen_temp_humidity'
+      unit_of_measurement: '°C'
+      value_template: "{{ value_json.temperature | round(1) }}"
+      availability_topic: "zigbee2mqtt/bridge/state"
+      device_class: "temperature"
+    - platform: mqtt
+      name: 'Kitchen humidity'
+      state_topic: 'zigbee2mqtt/kitchen_temp_humidity'
+      unit_of_measurement: '%'
+      value_template: "{{ value_json.humidity | round(0) }}"
+      availability_topic: "zigbee2mqtt/bridge/state"
+      device_class: "humidity"
+
+chown homeassistant.nogroup sensor.yaml
+systemctl restart hass 
+*/
