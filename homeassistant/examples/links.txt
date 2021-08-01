@@ -1,0 +1,302 @@
+Plans builders
+
+https://floorplanner.com/demo
+https://sharethelove.io/picture-elements-cards/3d-floorplan
+http://www.sweethome3d.com/
+
+Picture elements card
+https://www.home-assistant.io/lovelace/picture-elements/
+
+Sample projects
+https://community.home-assistant.io/c/projects/9
+https://github.com/frenck/awesome-home-assistant
+
+Lovelace & Frontend
+https://community.home-assistant.io/c/projects/frontend/34
+
+
+Floorplan UI
+https://github.com/ExperienceLovelace/ha-floorplan
+
+How to set up the Picture Elements card in Home Assistant – Lovelace
+
+пробовали добавить panel: true для вкладки с планом?
+
+https://www.juanmtech.com/set-up-the-picture-elements-card-in-home-assistant/
+https://www.youtube.com/watch?v=8PHBqQnFyTw
+
+Floorplan UI with Color synced lights
+https://community.home-assistant.io/t/floorplan-ui-with-color-synced-lights/169417
+
+Gree / C&H control
+https://github.com/arthurkrupa/gree-hvac-mqtt-bridge
+https://github.com/RobHofmann/HomeAssistant-GreeClimateComponent
+gree smart
+CH-S09FTXLA
+
+HA panel mode for 3d plan 
+https://www.home-assistant.io/lovelace/dashboards-and-views#panel
+
+InfluxDB
+https://www.home-assistant.io/integrations/influxdb
+
+Google Assistant
+https://www.home-assistant.io/integrations/google_assistant#configuration
+https://sprut.ai/client/article/388
+
+Android app
+https://github.com/home-assistant/android
+https://play.google.com/store/apps/details?id=com.thanksmister.iot.wallpanel
+
+Utility meter
+https://www.home-assistant.io/integrations/utility_meter
+https://www.home-assistant.io/integrations/integration
+
+HACS
+https://hacs.xyz/docs/installation/installation
+
+Weather
+Панель разработчика - состояния. Наберите в поиске WEATHER, если есть, то покажет
+Если нужно карточку в ловелэйс добавить (если вы перешли на ручное управление), то так:
+type: weather-forecast
+entity: weather.НАЗВАНИЕ
+https://www.home-assistant.io/integrations/openweathermap/
+https://github.com/Limych/ha-gismeteo
+
+Thermostat
+https://www.ixbt.com/live/chome/avtomatizaciya-otopleniya-v-umnom-dome-elektricheskaya-termogolovka-mihome-home-assistant-termostat.html
+
+climate:
+  - platform: generic_thermostat
+    name: Thermostat
+    heater: switch.relay # тут указываете Ваше реле
+    target_sensor: sensor.temperature # тут указываете Ваш датчик температуры
+    min_temp: 15
+    max_temp: 30
+    ac_mode: false
+    target_temp: 22.5
+    cold_tolerance: 2.5
+    hot_tolerance: 2.5
+    precision: 0.5
+
+У Вас в ХА появится сущность climate.thermostat.
+https://www.home-assis…ns/generic_thermostat/
+
+Возможно убрать десятые и сотые в значении датчиков температуры и влажности
+devices.yaml
+
+  temperature_precision: 0
+  humidity_precision: 0
+
+Modbus RTU
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+lovelace:
+  mode: yaml
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+hacs:
+  token: токен
+  appdaemon: true
+  python_script: true
+  theme: true
+  
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+panel_iframe:
+    configurator:
+        title: Конфигуратор
+        icon: mdi:square-edit-outline
+        url: http://10.168.1.99:3218
+
+    icons:
+        title: Иконки
+        icon: mdi:drawing
+        url: https://cdn.materialdesignicons.com/4.5.95/
+
+# Example configuration.yaml entry for a serial connection
+modbus:
+    name: hub1
+    type: serial
+    method: rtu
+    port: /dev/ttyUSB0
+    baudrate: 9600
+    stopbits: 1
+    bytesize: 8
+    parity: N
+    timeout: 1
+  
+sensor:
+  - platform: modbus
+    scan_interval: 10
+    registers:
+        - name: "Кухня"
+          hub: hub_mb
+          slave: "1"
+          register: "1"
+          register_type: holding
+          unit_of_measurement: '░C'
+          count: 1
+          scale: 0.1
+          offset: 0
+          precision: 1
+          data_type: float
+        - name: "Комната"
+#        hub: hub1
+          slave: "1"
+          register: "0"
+  - platform: command_line
+    scan_interval: 300
+    name: CPU Temp
+    command: 'cat /sys/что-то там...'
+    unit_of_measurement: '░C'
+    value_template: '{{ value | multiply(0.001) }}'
+discovery:
+
+Чтобы уменьшить нагрузку SD карту или другие носители можно очень просто базу данных перенести в оперативку. Естественно, при перезагрузке она сбрасывается, но может кому то будет полезно
+Это для родной базы данных sqlite
+recorder:
+  purge_keep_days: 2
+  db_url: 'sqlite:///:memory:'
+
+Chromecast Radio with station and player selection
+https://community.home-assistant.io/t/chromecast-radio-with-station-and-player-selection/12732
+
+Aqara switch 
+trigger:
+  - platform: event
+    event_type: xiaomi_aqara.click
+    event_data:
+      entity_id: binary_sensor.wall_switch_right_small
+      click_type: single
+
+
+- alias: Кнопка нажатие - вкл zigbee розетку 
+  trigger:
+    platform: event
+    event_type: xiaomi_aqara.click
+    event_data:
+      entity_id: binary_sensor.switch_158d000359b0a2
+      click_type: single
+  action:
+    service: switch.toggle
+    data:
+      entity_id: switch.plug_158d00033b1177
+
+
+настройки для InfluxDB, чтобы выводить допустим график потребления чего либо (типа электричества) по дням, месяцам, годам 
+
+запросы по графикам в графане:
+Почасовой:
+SELECT difference(max("value")) FROM "autogen"."water_volume" WHERE ("entity_id" = 'rasxod_vodu_l') AND $timeFilter GROUP BY time(1h) fill(previous)
+Дневной:
+SELECT difference(max("value")) FROM "month"."water_volume_hourly" WHERE ("entity_id" = 'rasxod_vodu_l') AND $timeFilter GROUP BY time(1d) fill(previous)
+Недельный:
+SELECT difference(max("value")) FROM "year"."water_volume_wekly" WHERE ("entity_id" = 'rasxod_vodu_l') AND $timeFilter GROUP BY time(1w) fill(previous)
+Месячный:
+SELECT difference(max("value")) FROM "year"."water_volume_wekly" WHERE ("entity_id" = 'rasxod_vodu_l') AND $timeFilter GROUP BY time(30d) fill(previous)
+
+Conditions для Инфлюкс дб
+
+CREATE CONTINUOUS QUERY cq_water_hourly ON home_assistant BEGIN SELECT max(value) AS value INTO home_assistant.month.water_volume_hourly FROM home_assistant.autogen.water_volume GROUP BY time(1h), entity_id fill(previous) END
+
+CREATE CONTINUOUS QUERY cq_water_wekly ON home_assistant BEGIN SELECT max(value) AS value INTO home_assistant.year.water_volume_wekly FROM home_assistant.month.water_volume_hourly GROUP BY time(1w), entity_id fill(previous) EN
+
+CREATE CONTINUOUS QUERY cq_water_monthly ON home_assistant BEGIN SELECT max(value) AS value INTO home_assistant.year5.water_volume_monthly FROM home_assistant.year.water_volume_hourly GROUP BY time(30d), entity_id fill(previous) END
+
+
+
+Карточки для НА
+type: vertical-stack
+cards:
+  - type: glance
+    entities: []
+    title: Расход воды
+  - type: iframe
+    id: graf1
+    url: >-
+      /api/hassio_ingress/XIb1cs35BoAfF29A2p5AIR0s2jKi37vrB1k2cPPmWO0/d-solo/osIHpeggz/posutochnyi-raskhod-vody?orgId=1&theme=light&panelId=2&refresh%3D15m&from=now-48h&to=now
+    aspect_ratio: 55%
+  - type: iframe
+    id: graf1
+    url: >-
+      /api/hassio_ingress/XIb1cs35BoAfF29A2p5AIR0s2jKi37vrB1k2cPPmWO0/d-solo/osIHpeggz/raskhod-vody?orgId=1&panelId=3&refresh%3D10hm&from=now-7d&to=now
+    aspect_ratio: 55%
+  - type: iframe
+    id: graf1
+    url: >-
+      /api/hassio_ingress/XIb1cs35BoAfF29A2p5AIR0s2jKi37vrB1k2cPPmWO0/d-solo/osIHpeggz/raskhod-vody?orgId=1&panelId=4&refresh%3D1d&from=now-10w&to=now
+    aspect_ratio: 55%
+  - type: iframe
+    id: graf1
+    url: >-
+      /api/hassio_ingress/XIb1cs35BoAfF29A2p5AIR0s2jKi37vrB1k2cPPmWO0/d-solo/osIHpeggz/raskhod-vody?orgId=1&panelId=5&refresh%3D15d&from=now-20w&to=now
+    aspect_ratio: 55%
+
+
+Camera
+
+У меня реализован вывод дополнительного потока (уменьшеного разрешения и битрейта) с камер наружного наблюдения по протоколу rtsp в lovelace:
+
+configuration.yam
+camera:
+  - platform: generic
+    still_image_url: "[url="http://192.168.1.76/ISAPI/Streaming/Channels/101/picture"]http://192.168.1.76/IS…g/Channels/101/picture[/url]"
+    stream_source: "rtsp://192.168.1.76:554/user=login&password=pass&channel=1&stream=1.sdp?"
+    name: "Cam 1"
+
+  - platform: generic
+    still_image_url: "[url="http://192.168.1.76/ISAPI/Streaming/Channels/201/picture"]http://192.168.1.76/IS…g/Channels/201/picture[/url]"
+    stream_source: "rtsp://192.168.1.76:554/user=login&password=pass&channel=2&stream=1.sdp?"
+    name: "Cam 2"
+
+  - platform: generic
+    still_image_url: "[url="http://192.168.1.76/ISAPI/Streaming/Channels/301/picture"]http://192.168.1.76/IS…g/Channels/301/picture[/url]"
+    stream_source: "rtsp://192.168.1.76:554/user=login&password=pass&channel=3&stream=1.sdp?"
+    name: "Cam 3"
+
+  - platform: generic
+    still_image_url: "[url="http://192.168.1.76/ISAPI/Streaming/Channels/401/picture"]http://192.168.1.76/IS…g/Channels/401/picture[/url]"
+    stream_source: "rtsp://192.168.1.76:554/user=login&password=pass&channel=4&stream=1.sdp?"
+    name: "Cam 4
+
+ui-lovelace.yaml
+      - type: vertical-stack
+        cards:
+        - type: markdown
+          content: >
+             **Камеры улица**
+        - type: horizontal-stack
+          cards:
+          - type: picture-entity
+            entity: camera.cam_1
+            camera_view: live
+            show_state: false
+            show_name: false
+
+          - type: picture-entity
+            entity: camera.cam_2
+            camera_view: live
+            show_state: false
+            show_name: false
+
+        - type: horizontal-stack
+          cards:
+          - type: picture-entity
+            entity: camera.cam_3
+            camera_view: live
+            show_state: false
+            show_name: false
+          - type: picture-entity
+            entity: camera.cam_4
+            camera_view: live
+            show_state: false
+            show_name: false

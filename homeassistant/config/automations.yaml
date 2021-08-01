@@ -1,1 +1,42 @@
-[]
+- alias: "Bedroom main light brightness set" 
+  trigger:
+    platform: state
+    entity_id: input_number.bedroom_main_brightness
+  action:
+    - service: modbus.write_register
+      data_template:
+        hub: modbus
+        unit: 10
+        address: 0
+        value: "{{ (states('input_number.bedroom_main_brightness'))|int }}"
+- alias: "Bedroom main light brightness get"
+  id: bedroom_main_light_brightness_get
+  trigger:
+    platform: state
+    entity_id: sensor.bedroom_main_brightness
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.bedroom_main_brightness
+        value: "{{ (states('sensor.bedroom_main_brightness'))|int }}"
+- alias: "Bedroom led light brightness set" 
+  trigger:
+    platform: state
+    entity_id: input_number.bedroom_led_brightness
+  action:
+    - service: modbus.write_register
+      data_template:
+        hub: modbus
+        unit: 10
+        address: 1
+        value: "{{ (states('input_number.bedroom_led_brightness'))|int }}"
+- alias: "Bedroom led light brightness get"
+  id: bedroom_led_light_brightness_get
+  trigger:
+    platform: state
+    entity_id: sensor.bedroom_led_brightness
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.bedroom_led_brightness
+        value: "{{ (states('sensor.bedroom_led_brightness'))|int }}"

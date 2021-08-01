@@ -1,0 +1,19 @@
+https://www.home-assistant.io/common-tasks/core
+
+Backup your installation.
+
+Check the release notes for breaking changes on Home Assistant release notes. Be sure to check all release notes between the version you are running and the one you are upgrading to. Use the search function in your browser (CTRL + f / CMD + f) and search for Breaking Changes.
+
+Switch to the user that is running Home Assistant
+
+sudo -u homeassistant -H -s
+
+Activate the virtual environment that Home Assistant is running in
+
+source /opt/homeassistant/bin/activate
+
+Download and install the new version
+
+pip3 install --upgrade homeassistant
+
+When that is complete restart the service for it to use the new files.

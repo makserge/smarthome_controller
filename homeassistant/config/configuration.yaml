@@ -1,4 +1,14 @@
-
+logger:
+  default: fatal
+ # logs:
+ #   homeassistant.core: fatal
+ #   homeassistant.components.modbus: debug
+ #   pymodbus.client: debug
+ #   pymodbus.client.sync: debug
+ #   pymodbus.transaction: debug
+ #   pymodbus.framer.rtu_framer: debug
+ #   pymodbus.factory: debug
+  
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
 
@@ -11,6 +21,7 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 sensor: !include sensors.yaml
+modbus: !include modbus.yaml
 
 mqtt:
   discovery: true
@@ -18,23 +29,15 @@ mqtt:
   will_message:
     topic: 'homeassistant/status'
     payload: 'offline'
-
-modbus:
-  name: modbus
-  type: serial
-  baudrate: 9600
-  bytesize: 8
-  method: rtu
-  parity: N
-  port: /dev/ttyS3
-  stopbits: 1
-  lights:
-      - name: Light 4
-        slave: 21
-        address: 3
-        write_type: coil
-
-
-
-
-
+    
+input_number:
+  bedroom_main_brightness:
+    name: Main light brightness
+    min: 10
+    max: 100
+    step: 5
+  bedroom_led_brightness:
+    name: Led light brightness
+    min: 10
+    max: 100
+    step: 5

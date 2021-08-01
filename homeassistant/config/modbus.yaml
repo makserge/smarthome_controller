@@ -1,0 +1,115 @@
+name: modbus
+type: serial
+baudrate: 9600
+bytesize: 8
+method: rtu
+parity: N
+port: /dev/ttyS3
+stopbits: 1
+timeout: 4
+delay: 3
+switches:
+    - name: bedroom_main_switch
+      slave: 10
+      address: 0
+      write_type: coil
+      verify:
+      scan_interval: 5
+    - name: bedroom_led_switch
+      slave: 10
+      address: 1
+      write_type: coil
+      verify:
+      scan_interval: 5
+sensors:
+    - name: bedroom_main_brightness
+      slave: 10
+      address: 0
+      scan_interval: 5
+    - name: bedroom_led_brightness
+      slave: 10
+      address: 1
+      scan_interval: 5
+    - name: bedroom_co2
+      slave: 10
+      address: 2
+      unit_of_measurement: ppm
+      scan_interval: 60
+    - name: bedroom_temperature
+      slave: 10
+      address: 3
+      unit_of_measurement: °C
+      scale: 0.1
+      offset: 0
+      precision: 1
+      scan_interval: 60
+    - name: bedroom_humidity
+      slave: 10
+      address: 4
+      unit_of_measurement: "%"
+      scan_interval: 60
+    - name: bedroom_light_level
+      slave: 10
+      address: 5
+      unit_of_measurement: lx
+      scan_interval: 60
+    - name: total_power_voltage
+      unit_of_measurement: V
+      slave: 1
+      address: 0
+      input_type: input
+      scale: 0.1
+      offset: 0
+      precision: 1
+      scan_interval: 60
+    - name: total_power_current
+      unit_of_measurement: A
+      slave: 1
+      address: 1
+      count: 2
+      swap: word
+      input_type: input
+      scale: 0.001
+      offset: 0
+      precision: 1
+      scan_interval: 60
+    - name: total_power_power
+      unit_of_measurement: W
+      slave: 1
+      address: 3
+      count: 2
+      swap: word
+      input_type: input
+      scale: 0.1
+      offset: 0
+      precision: 1
+      scan_interval: 60
+    - name: total_power_wh
+      unit_of_measurement: Wh
+      slave: 1
+      address: 5
+      count: 2
+      swap: word
+      input_type: input
+      scale: 1
+      offset: 0
+      precision: 1
+      scan_interval: 60
+    - name: total_power_frequency
+      unit_of_measurement: Hz
+      slave: 1
+      address: 7
+      input_type: input
+      scale: 0.1
+      offset: 0
+      precision: 1
+      scan_interval: 60
+    - name: total_power_pf
+      unit_of_measurement: Pf
+      slave: 1
+      address: 8
+      input_type: input
+      scale: 0.01
+      offset: 0
+      precision: 1
+      scan_interval: 60

@@ -1,0 +1,26 @@
+type: entities
+entities:
+  - entity: switch.bedroom_main_switch
+    name: Main light
+    icon: hass:ceiling-light
+  - entity: input_number.bedroom_main_brightness
+    icon: hass:ceiling-light
+  - entity: switch.bedroom_led_switch
+    icon: mdi:lightbulb
+    name: Led light
+  - entity: input_number.bedroom_led_brightness
+    icon: mdi:lightbulb
+  - entity: sensor.bedroom_co2
+    icon: hass:molecule-co2
+    name: CO2
+  - entity: sensor.bedroom_temperature
+    name: Temperature
+  - entity: sensor.bedroom_humidity
+    name: Humidity
+    icon: mdi:water-percent
+  - entity: sensor.bedroom_light_level
+    name: Illumination
+    icon: mdi:weather-sunny
+title: Bedroom
+state_color: true
+show_header_toggle: false

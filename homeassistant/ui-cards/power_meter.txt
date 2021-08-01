@@ -1,0 +1,22 @@
+type: entities
+entities:
+  - entity: sensor.total_power_voltage
+    name: Voltage
+    icon: mdi:flash
+  - entity: sensor.total_power_current
+    name: Current
+    icon: mdi:sine-wave
+  - entity: sensor.total_power_power
+    name: Power
+    icon: mdi:battery-charging
+  - entity: sensor.total_power_wh
+    name: Energy
+    icon: mdi:counter
+  - entity: sensor.total_power_pf
+    name: Power factor
+    icon: mdi:power-plug
+  - entity: sensor.total_power_frequency
+    name: Frequency
+    icon: mdi:power-plug
+title: Power meter
+state_color: false
