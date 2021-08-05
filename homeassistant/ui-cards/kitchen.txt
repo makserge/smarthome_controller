@@ -1,0 +1,26 @@
+type: entities
+entities:
+  - entity: switch.kitchen_main_switch
+    name: Main light
+    icon: hass:ceiling-light
+  - entity: input_number.kitchen_main_brightness
+    icon: hass:ceiling-light
+  - entity: switch.kitchen_led_switch
+    icon: mdi:lightbulb
+    name: Led light
+  - entity: input_number.kitchen_led_brightness
+    icon: mdi:lightbulb
+  - entity: sensor.kitchen_co2
+    icon: hass:molecule-co2
+    name: CO2
+  - entity: sensor.kitchen_temperature
+    name: Temperature
+  - entity: sensor.kitchen_humidity
+    name: Humidity
+    icon: mdi:water-percent
+  - entity: sensor.kitchen_light_level
+    name: Illumination
+    icon: mdi:weather-sunny
+title: Kitchen
+state_color: true
+show_header_toggle: false

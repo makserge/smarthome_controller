@@ -1,0 +1,13 @@
+diskutil list
+
+Backup
+sudo dd if=/dev/rdisk2 of=name-of-my-backup.dmg
+
+Restore
+We need to unmount the card by:
+
+diskutil unmountDisk disk3
+and to write the data to the new card you can choose one of the following:
+
+sudo dd if=name-of-my-backup.dmg of=/dev/rdisk2 # Very Slow
+sudo dd bs=32m if=name-of-my-backup.dmg of=/dev/rdisk2 # Ultra fast

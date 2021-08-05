@@ -1,13 +1,17 @@
+recorder:
+  purge_keep_days: 2
+  db_url: 'sqlite:///:memory:'
+  
 logger:
   default: fatal
- # logs:
- #   homeassistant.core: fatal
- #   homeassistant.components.modbus: debug
- #   pymodbus.client: debug
- #   pymodbus.client.sync: debug
- #   pymodbus.transaction: debug
- #   pymodbus.framer.rtu_framer: debug
- #   pymodbus.factory: debug
+  logs:
+    homeassistant.core: fatal
+    homeassistant.components.modbus: debug
+    pymodbus.client: debug
+    pymodbus.client.sync: debug
+    pymodbus.transaction: debug
+    pymodbus.framer.rtu_framer: debug
+    pymodbus.factory: debug
   
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
@@ -41,3 +45,25 @@ input_number:
     min: 10
     max: 100
     step: 5
+    
+  playroom_main_brightness:
+    name: Main light brightness
+    min: 11
+    max: 100
+    step: 5
+  playroom_led_brightness:
+    name: Led light brightness
+    min: 11
+    max: 100
+    step: 5
+    
+  kitchen_main_brightness:
+    name: Main light brightness
+    min: 12
+    max: 100
+    step: 5
+  kitchen_led_brightness:
+    name: Led light brightness
+    min: 12
+    max: 100
+    step: 5  

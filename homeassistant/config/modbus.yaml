@@ -8,6 +8,7 @@ port: /dev/ttyS3
 stopbits: 1
 timeout: 4
 delay: 3
+
 switches:
     - name: bedroom_main_switch
       slave: 10
@@ -21,6 +22,33 @@ switches:
       write_type: coil
       verify:
       scan_interval: 5
+      
+    - name: playroom_main_switch
+      slave: 11
+      address: 0
+      write_type: coil
+      verify:
+      scan_interval: 5
+    - name: playroom_led_switch
+      slave: 11
+      address: 1
+      write_type: coil
+      verify:
+      scan_interval: 5
+      
+    - name: kitchen_main_switch
+      slave: 12
+      address: 0
+      write_type: coil
+      verify:
+      scan_interval: 5
+    - name: kitchen_led_switch
+      slave: 12
+      address: 1
+      write_type: coil
+      verify:
+      scan_interval: 5
+      
 sensors:
     - name: bedroom_main_brightness
       slave: 10
@@ -53,6 +81,71 @@ sensors:
       address: 5
       unit_of_measurement: lx
       scan_interval: 60
+      
+    - name: playroom_main_brightness
+      slave: 11
+      address: 0
+      scan_interval: 5
+    - name: playroom_led_brightness
+      slave: 11
+      address: 1
+      scan_interval: 5
+    - name: playroom_co2
+      slave: 11
+      address: 2
+      unit_of_measurement: ppm
+      scan_interval: 60
+    - name: playroom_temperature
+      slave: 11
+      address: 3
+      unit_of_measurement: °C
+      scale: 0.1
+      offset: 0
+      precision: 1
+      scan_interval: 60
+    - name: playroom_humidity
+      slave: 11
+      address: 4
+      unit_of_measurement: "%"
+      scan_interval: 60
+    - name: playroom_light_level
+      slave: 11
+      address: 5
+      unit_of_measurement: lx
+      scan_interval: 60
+      
+    - name: kitchen_main_brightness
+      slave: 12
+      address: 0
+      scan_interval: 5
+    - name: kitchen_led_brightness
+      slave: 12
+      address: 1
+      scan_interval: 5
+    - name: kitchen_co2
+      slave: 12
+      address: 2
+      unit_of_measurement: ppm
+      scan_interval: 60
+    - name: kitchen_temperature
+      slave: 12
+      address: 3
+      unit_of_measurement: °C
+      scale: 0.1
+      offset: 0
+      precision: 1
+      scan_interval: 60
+    - name: kitchen_humidity
+      slave: 12
+      address: 4
+      unit_of_measurement: "%"
+      scan_interval: 60
+    - name: kitchen_light_level
+      slave: 12
+      address: 5
+      unit_of_measurement: lx
+      scan_interval: 60
+      
     - name: total_power_voltage
       unit_of_measurement: V
       slave: 1

@@ -1,0 +1,7 @@
+type: entities
+entities:
+  - entity: sensor.kitchen_temperature_zigbee
+    name: Temperature
+  - entity: sensor.kitchen_humidity_zigbee
+    name: Humidity
+title: Kitchen Zigbee

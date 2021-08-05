@@ -315,7 +315,7 @@ Is the information correct? [Y/n] y
 22. Install zigbee2mqtt 1.7.1
 git clone --depth 1 --branch 1.7.1 https://github.com/Koenkk/zigbee2mqtt.git /home/zigbee/zigbee2mqtt
 
-git clone https://github.com/Koenkk/zigbee2mqtt.git /home/zigbee/zigbee2mqtt
+#git clone https://github.com/Koenkk/zigbee2mqtt.git /home/zigbee/zigbee2mqtt
 
 cd /home/zigbee/zigbee2mqtt
 
@@ -668,128 +668,136 @@ Message 0 received on zigbee2mqtt/kitchen_temp_humidity at 1:44 PM:
     "humidity": 46.63,
     "linkquality": 148
 }
-Edit Dashboard->Unused entries->Check "kitchen_temp_humidity_temperature" and "kitchen_temp_humidity_humidity"->Add card
-Developer->click "kitchen_temp_humidity_temperature" and set
 
-friendly_name: Temperature
-
-click sensor.kitchen_temp_humidity_humidity and set
-
-friendly_name: Humidity
-/*
 
 nano /opt/homeassistant/config/sensors.yaml
 
 
-sensor:
-    - platform: mqtt
-      name: 'Kitchen temperature'
-      state_topic: 'zigbee2mqtt/kitchen_temp_humidity'
-      unit_of_measurement: '°C'
-      value_template: "{{ value_json.temperature | round(1) }}"
-      availability_topic: "zigbee2mqtt/bridge/state"
-      device_class: "temperature"
-    - platform: mqtt
-      name: 'Kitchen humidity'
-      state_topic: 'zigbee2mqtt/kitchen_temp_humidity'
-      unit_of_measurement: '%'
-      value_template: "{{ value_json.humidity | round(0) }}"
-      availability_topic: "zigbee2mqtt/bridge/state"
-      device_class: "humidity"
+- platform: mqtt
+  name: 'Kitchen temperature'
+  state_topic: 'zigbee2mqtt/kitchen_temp_humidity'
+  unit_of_measurement: '°C'
+  value_template: "{{ value_json.temperature | round(1) }}"
+  availability_topic: "zigbee2mqtt/bridge/state"
+  device_class: "temperature"
+- platform: mqtt
+  name: 'Kitchen humidity'
+  state_topic: 'zigbee2mqtt/kitchen_temp_humidity'
+  unit_of_measurement: '%'
+  value_template: "{{ value_json.humidity | round(0) }}"
+  availability_topic: "zigbee2mqtt/bridge/state"
+  device_class: "humidity"
+  
 
-systemctl restart hass 
-*/
+Edit Dashboard->Add card->Entities->Show code editor
 
-40. Configure Modbus RTU
+type: entities
+entities:
+  - entity: sensor.kitchen_temperature
+    name: Temperature
+  - entity: sensor.kitchen_humidity
+    name: Humidity
+title: Kitchen Zigbee
+
+
+41. Setup Modbus CLI
+ 
+pip install modbus_cli	
+
+Example: read coil at address 0 on slave 10
+
+modbus -s 10 -b 9600 -p 1 -P n -v /dev/ttyS3 1 c@0 
+
+42. Configure Modbus RTU
 
 nano /opt/homeassistant/config/configuration.yaml
  
 add 
 
-sensor: !include sensors.yaml
+modbus: !include modbus.yaml
 
 after 
 scene: !include scenes.yaml
 
-add
 
-modbus:
-  name: modbus
-  type: serial
-  baudrate: 9600
-  bytesize: 8
-  method: rtu
-  parity: N
-  port: /dev/ttyS3
-  stopbits: 1
+nano /opt/homeassistant/config/modbus.yaml  
 
-nano /opt/homeassistant/config/sensors.yaml  
-
-chown homeassistant.nogroup sensors.yaml
-
-41. Add light switch
+name: modbus
+type: serial
+baudrate: 9600
+bytesize: 8
+method: rtu
+parity: N
+port: /dev/ttyS3
+stopbits: 1
+timeout: 4
+delay: 3
 
 
-modbus:
-  name: modbus
-  type: serial
-  baudrate: 9600
-  bytesize: 8
-  method: rtu
-  parity: N
-  port: /dev/ttyS3
-  stopbits: 1
-  lights:
-      - name: Light 4
-        slave: 21
-        address: 3
-        write_type: coil
+43. Add light switch
 
+nano /opt/homeassistant/config/modbus.yaml  
 
+name: modbus
+type: serial
+baudrate: 9600
+bytesize: 8
+method: rtu
+parity: N
+port: /dev/ttyS3
+stopbits: 1
+timeout: 4
+delay: 3
+lights:
+    - name: Light 4
+      slave: 21
+      address: 3
+      write_type: coil
 
 
 Edit dashboard->Add card->By Entity->Select "Light 4"->Continue->Add to lovelace UI	
 
-41. Add switch
+44. Add switch
 
-modbus:
-  name: modbus
-  type: serial
-  baudrate: 9600
-  bytesize: 8
-  method: rtu
-  parity: N
-  port: /dev/ttyS3
-  stopbits: 1
-  switches:
-      - name: Switch 4
-        slave: 21
-        address: 3
-        write_type: coil
-		
+nano /opt/homeassistant/config/modbus.yaml  
+
+name: modbus
+type: serial
+baudrate: 9600
+bytesize: 8
+method: rtu
+parity: N
+port: /dev/ttyS3
+stopbits: 1
+timeout: 4
+delay: 3
+switches:
+    - name: Switch 4
+      slave: 21
+      address: 3
+      write_type: coil
+      verify:
+      scan_interval: 5
+
 Edit dashboard->Add card->By Entity->Select "Switch 4"->Continue->Add to lovelace UI
 
-42. Add binary sensor
+45. Add binary sensor
 
-modbus:
-  name: modbus
-  type: serial
-  baudrate: 9600
-  bytesize: 8
-  method: rtu
-  parity: N
-  port: /dev/ttyS3
-  stopbits: 1
-  binary_sensors:
-    - name: "binary_sensor1"
-      address: 3
-      scan_interval: 5
-      slave: 21
-	  
-	  
-43. Setup Modbus CLI
- 
-pip install modbus_cli	
+nano /opt/homeassistant/config/modbus.yaml  
 
-modbus -s 21 -b 9600 -p 1 -P n -v /dev/ttyS3 1 c@3 = read coil at address 3
+name: modbus
+type: serial
+baudrate: 9600
+bytesize: 8
+method: rtu
+parity: N
+port: /dev/ttyS3
+stopbits: 1
+timeout: 4
+delay: 3
+binary_sensors:
+  - name: "binary_sensor1"
+    address: 3
+    scan_interval: 5
+    slave: 21
 
