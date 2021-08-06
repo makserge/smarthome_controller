@@ -49,6 +49,32 @@ switches:
       verify:
       scan_interval: 5
       
+    - name: balcony_main_switch
+      slave: 31
+      address: 0
+      write_type: coil
+      verify:
+      scan_interval: 5
+    - name: balcony_led_switch
+      slave: 31
+      address: 1
+      write_type: coil
+      verify:
+      scan_interval: 5
+    - name: balcony_thermostat
+      slave: 31
+      address: 0
+      write_type: holding
+      verify:
+      scan_interval: 5
+      
+binary_sensors:
+    - name: balcony_thermostat_state
+      slave: 31
+      address: 2
+      input_type: coil
+      scan_interval: 30
+      
 sensors:
     - name: bedroom_main_brightness
       slave: 10
@@ -144,6 +170,36 @@ sensors:
       slave: 12
       address: 5
       unit_of_measurement: lx
+      scan_interval: 60
+      
+    - name: balcony_thermostat_temp
+      slave: 31
+      address: 1
+      input_type: holding
+      scan_interval: 5
+    - name: balcony_floor_temp
+      slave: 31
+      address: 4
+      input_type: holding
+      unit_of_measurement: °C
+      scale: 0.1
+      offset: 0
+      precision: 1
+      scan_interval: 60
+    - name: balcony_air_temp
+      slave: 31
+      address: 5
+      input_type: holding
+      unit_of_measurement: °C
+      scale: 0.1
+      offset: 0
+      precision: 1
+      scan_interval: 60
+    - name: balcony_humidity
+      slave: 31
+      address: 6
+      input_type: holding
+      unit_of_measurement: "%"
       scan_interval: 60
       
     - name: total_power_voltage

@@ -120,3 +120,24 @@
       data_template:
         entity_id: input_number.kitchen_led_brightness
         value: "{{ (states('sensor.kitchen_led_brightness'))|int }}"
+        
+- alias: "Balcony thermostat temperature set" 
+  trigger:
+    platform: state
+    entity_id: input_number.balcony_thermostat_temp
+  action:
+    - service: modbus.write_register
+      data_template:
+        hub: modbus
+        unit: 31
+        address: 1
+        value: "{{ (states('input_number.balcony_thermostat_temp'))|int }}"
+- alias: "Balcony thermostat temperature get"
+  trigger:
+    platform: state
+    entity_id: sensor.balcony_thermostat_temp
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.balcony_thermostat_temp
+        value: "{{ (states('sensor.balcony_thermostat_temp'))|int }}"

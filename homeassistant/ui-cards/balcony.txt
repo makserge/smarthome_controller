@@ -1,0 +1,29 @@
+type: entities
+entities:
+  - entity: switch.balcony_main_switch
+    name: Main light
+    icon: hass:ceiling-light
+  - entity: switch.balcony_led_switch
+    icon: mdi:lightbulb
+    name: Led light
+  - entity: switch.balcony_thermostat
+    icon: mdi:thermostat
+    name: Thermostat
+  - entity: binary_sensor.balcony_thermostat_state
+    name: Thermostat state
+    icon: mdi:thermostat
+  - entity: input_number.balcony_thermostat_temp
+    name: Thermostat temperature
+    icon: mdi:thermostat
+  - entity: sensor.balcony_floor_temp
+    icon: hass:thermometer
+    name: Floor temperature
+  - entity: sensor.balcony_air_temp
+    icon: hass:thermometer
+    name: Air temperature
+  - entity: sensor.balcony_humidity
+    icon: hass:water-percent
+    name: Humidity
+title: Balcony
+state_color: true
+show_header_toggle: false
