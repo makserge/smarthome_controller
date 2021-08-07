@@ -68,10 +68,28 @@ switches:
       verify:
       scan_interval: 5
       
+    - name: bathroom_heater_switch
+      slave: 50
+      address: 1
+      write_type: coil
+      verify:
+      scan_interval: 5
+    - name: bathroom_thermostat
+      slave: 50
+      address: 0
+      write_type: holding
+      verify:
+      scan_interval: 5
+      
 binary_sensors:
     - name: balcony_thermostat_state
       slave: 31
       address: 2
+      input_type: coil
+      scan_interval: 30
+    - name: bathroom_thermostat_state
+      slave: 50
+      address: 0
       input_type: coil
       scan_interval: 30
       
@@ -200,6 +218,30 @@ sensors:
       address: 6
       input_type: holding
       unit_of_measurement: "%"
+      scan_interval: 60
+      
+    - name: bathroom_thermostat_temp
+      slave: 50
+      address: 1
+      input_type: holding
+      scan_interval: 5
+    - name: bathroom_floor_temp
+      slave: 50
+      address: 4
+      input_type: holding
+      unit_of_measurement: °C
+      scale: 0.1
+      offset: 0
+      precision: 1
+      scan_interval: 60
+    - name: bathroom_air_temp
+      slave: 50
+      address: 5
+      input_type: holding
+      unit_of_measurement: °C
+      scale: 0.1
+      offset: 0
+      precision: 1
       scan_interval: 60
       
     - name: total_power_voltage

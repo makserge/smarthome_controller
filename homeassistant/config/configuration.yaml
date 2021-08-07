@@ -73,3 +73,9 @@ input_number:
     min: 25
     max: 40
     step: 1
+    
+  bathroom_thermostat_temp:
+    name: Bathroom thermostat temperature
+    min: 25
+    max: 40
+    step: 1
