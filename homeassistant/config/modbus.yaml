@@ -6,7 +6,7 @@ method: rtu
 parity: N
 port: /dev/ttyS3
 stopbits: 1
-timeout: 4
+timeout: 10
 delay: 3
 
 switches:
@@ -15,71 +15,139 @@ switches:
       address: 0
       write_type: coil
       verify:
-      scan_interval: 5
+      scan_interval: 10
     - name: bedroom_led_switch
       slave: 10
       address: 1
       write_type: coil
       verify:
-      scan_interval: 5
+      scan_interval: 10
       
     - name: playroom_main_switch
       slave: 11
       address: 0
       write_type: coil
       verify:
-      scan_interval: 5
+      scan_interval: 10
     - name: playroom_led_switch
       slave: 11
       address: 1
       write_type: coil
       verify:
-      scan_interval: 5
+      scan_interval: 10
       
     - name: kitchen_main_switch
       slave: 12
       address: 0
       write_type: coil
       verify:
-      scan_interval: 5
+      scan_interval: 10
     - name: kitchen_led_switch
       slave: 12
       address: 1
       write_type: coil
       verify:
-      scan_interval: 5
+      scan_interval: 10
       
     - name: balcony_main_switch
       slave: 31
       address: 0
       write_type: coil
       verify:
-      scan_interval: 5
+      scan_interval: 10
     - name: balcony_led_switch
       slave: 31
       address: 1
       write_type: coil
       verify:
-      scan_interval: 5
+      scan_interval: 10
     - name: balcony_thermostat
       slave: 31
       address: 0
       write_type: holding
       verify:
-      scan_interval: 5
+      scan_interval: 10
       
     - name: bathroom_heater_switch
       slave: 50
       address: 1
       write_type: coil
       verify:
-      scan_interval: 5
+      scan_interval: 10
     - name: bathroom_thermostat
       slave: 50
       address: 0
       write_type: holding
       verify:
-      scan_interval: 5
+      scan_interval: 10
+    - name: bathroom_fan
+      slave: 32
+      address: 0
+      write_type: coil
+      verify:
+      scan_interval: 10
+    - name: bathroom_light
+      slave: 32
+      address: 2
+      write_type: coil
+      verify:
+      scan_interval: 10
+    - name: bathroom_fan_auto
+      slave: 32
+      address: 1
+      write_type: holding
+      verify:
+      scan_interval: 300
+      
+    - name: toilet_fan
+      slave: 32
+      address: 1
+      write_type: coil
+      verify:
+      scan_interval: 10
+    - name: toilet_light
+      slave: 32
+      address: 3
+      write_type: coil
+      verify:
+      scan_interval: 10
+    - name: toilet_boiler
+      slave: 32
+      address: 4
+      write_type: coil
+      verify:
+      scan_interval: 10
+    - name: toilet_fan_auto
+      slave: 32
+      address: 3
+      write_type: holding
+      verify:
+      scan_interval: 300
+    - name: toilet_light_auto
+      slave: 32
+      address: 6
+      write_type: holding
+      verify:
+      scan_interval: 300
+      
+    - name: heat_valve_1
+      slave: 32
+      address: 5
+      write_type: coil
+      verify:
+      scan_interval: 600
+    - name: heat_valve_2
+      slave: 32
+      address: 6
+      write_type: coil
+      verify:
+      scan_interval: 600
+    - name: heat_valve_3
+      slave: 32
+      address: 7
+      write_type: coil
+      verify:
+      scan_interval: 600
       
 binary_sensors:
     - name: balcony_thermostat_state
@@ -97,16 +165,16 @@ sensors:
     - name: bedroom_main_brightness
       slave: 10
       address: 0
-      scan_interval: 5
+      scan_interval: 10
     - name: bedroom_led_brightness
       slave: 10
       address: 1
-      scan_interval: 5
+      scan_interval: 10
     - name: bedroom_co2
       slave: 10
       address: 2
       unit_of_measurement: ppm
-      scan_interval: 60
+      scan_interval: 300
     - name: bedroom_temperature
       slave: 10
       address: 3
@@ -114,31 +182,31 @@ sensors:
       scale: 0.1
       offset: 0
       precision: 1
-      scan_interval: 60
+      scan_interval: 300
     - name: bedroom_humidity
       slave: 10
       address: 4
       unit_of_measurement: "%"
-      scan_interval: 60
+      scan_interval: 300
     - name: bedroom_light_level
       slave: 10
       address: 5
       unit_of_measurement: lx
-      scan_interval: 60
+      scan_interval: 300
       
     - name: playroom_main_brightness
       slave: 11
       address: 0
-      scan_interval: 5
+      scan_interval: 10
     - name: playroom_led_brightness
       slave: 11
       address: 1
-      scan_interval: 5
+      scan_interval: 10
     - name: playroom_co2
       slave: 11
       address: 2
       unit_of_measurement: ppm
-      scan_interval: 60
+      scan_interval: 300
     - name: playroom_temperature
       slave: 11
       address: 3
@@ -146,31 +214,31 @@ sensors:
       scale: 0.1
       offset: 0
       precision: 1
-      scan_interval: 60
+      scan_interval: 300
     - name: playroom_humidity
       slave: 11
       address: 4
       unit_of_measurement: "%"
-      scan_interval: 60
+      scan_interval: 300
     - name: playroom_light_level
       slave: 11
       address: 5
       unit_of_measurement: lx
-      scan_interval: 60
+      scan_interval: 300
       
     - name: kitchen_main_brightness
       slave: 12
       address: 0
-      scan_interval: 5
+      scan_interval: 10
     - name: kitchen_led_brightness
       slave: 12
       address: 1
-      scan_interval: 5
+      scan_interval: 10
     - name: kitchen_co2
       slave: 12
       address: 2
       unit_of_measurement: ppm
-      scan_interval: 60
+      scan_interval: 300
     - name: kitchen_temperature
       slave: 12
       address: 3
@@ -178,23 +246,23 @@ sensors:
       scale: 0.1
       offset: 0
       precision: 1
-      scan_interval: 60
+      scan_interval: 300
     - name: kitchen_humidity
       slave: 12
       address: 4
       unit_of_measurement: "%"
-      scan_interval: 60
+      scan_interval: 300
     - name: kitchen_light_level
       slave: 12
       address: 5
       unit_of_measurement: lx
-      scan_interval: 60
+      scan_interval: 300
       
     - name: balcony_thermostat_temp
       slave: 31
       address: 1
       input_type: holding
-      scan_interval: 5
+      scan_interval: 10
     - name: balcony_floor_temp
       slave: 31
       address: 4
@@ -203,7 +271,7 @@ sensors:
       scale: 0.1
       offset: 0
       precision: 1
-      scan_interval: 60
+      scan_interval: 300
     - name: balcony_air_temp
       slave: 31
       address: 5
@@ -212,19 +280,19 @@ sensors:
       scale: 0.1
       offset: 0
       precision: 1
-      scan_interval: 60
+      scan_interval: 300
     - name: balcony_humidity
       slave: 31
       address: 6
       input_type: holding
       unit_of_measurement: "%"
-      scan_interval: 60
+      scan_interval: 300
       
     - name: bathroom_thermostat_temp
       slave: 50
       address: 1
       input_type: holding
-      scan_interval: 5
+      scan_interval: 10
     - name: bathroom_floor_temp
       slave: 50
       address: 4
@@ -233,7 +301,7 @@ sensors:
       scale: 0.1
       offset: 0
       precision: 1
-      scan_interval: 60
+      scan_interval: 300
     - name: bathroom_air_temp
       slave: 50
       address: 5
@@ -242,7 +310,47 @@ sensors:
       scale: 0.1
       offset: 0
       precision: 1
-      scan_interval: 60
+      scan_interval: 300
+    - name: bathroom_temp
+      slave: 32
+      address: 2
+      input_type: input
+      unit_of_measurement: °C
+      scale: 0.1
+      offset: 0
+      precision: 1
+      scan_interval: 300
+    - name: bathroom_humidity
+      slave: 32
+      address: 3
+      input_type: input
+      unit_of_measurement: "%"
+      scan_interval: 300
+    - name: bathroom_brightness
+      slave: 32
+      address: 0
+      input_type: holding
+      scan_interval: 10
+      
+    - name: toilet_presence
+      slave: 32
+      address: 0
+      input_type: input
+      scan_interval: 10
+    - name: toilet_temp
+      slave: 32
+      address: 1
+      input_type: input
+      unit_of_measurement: °C
+      scale: 0.1
+      offset: 0
+      precision: 1
+      scan_interval: 300
+    - name: toilet_brightness
+      slave: 32
+      address: 5
+      input_type: holding
+      scan_interval: 10
       
     - name: total_power_voltage
       unit_of_measurement: V
@@ -252,7 +360,7 @@ sensors:
       scale: 0.1
       offset: 0
       precision: 1
-      scan_interval: 60
+      scan_interval: 300
     - name: total_power_current
       unit_of_measurement: A
       slave: 1
@@ -263,7 +371,7 @@ sensors:
       scale: 0.001
       offset: 0
       precision: 1
-      scan_interval: 60
+      scan_interval: 300
     - name: total_power_power
       unit_of_measurement: W
       slave: 1
@@ -274,7 +382,7 @@ sensors:
       scale: 0.1
       offset: 0
       precision: 1
-      scan_interval: 60
+      scan_interval: 300
     - name: total_power_wh
       unit_of_measurement: Wh
       slave: 1
@@ -285,7 +393,7 @@ sensors:
       scale: 1
       offset: 0
       precision: 1
-      scan_interval: 60
+      scan_interval: 300
     - name: total_power_frequency
       unit_of_measurement: Hz
       slave: 1
@@ -294,7 +402,7 @@ sensors:
       scale: 0.1
       offset: 0
       precision: 1
-      scan_interval: 60
+      scan_interval: 300
     - name: total_power_pf
       unit_of_measurement: Pf
       slave: 1
@@ -303,4 +411,4 @@ sensors:
       scale: 0.01
       offset: 0
       precision: 1
-      scan_interval: 60
+      scan_interval: 300

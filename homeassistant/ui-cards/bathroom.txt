@@ -1,5 +1,17 @@
 type: entities
 entities:
+  - entity: switch.bathroom_light
+    name: Light
+    icon: hass:ceiling-light
+  - entity: input_number.bathroom_brightness
+    icon: hass:ceiling-light
+    name: Light brightness
+  - entity: switch.bathroom_fan
+    name: Fan
+    icon: hass:fan
+  - entity: switch.bathroom_fan_auto
+    name: Fan auto
+    icon: hass:fan
   - entity: switch.bathroom_heater_switch
     name: Heater
     icon: mdi:flash
@@ -18,6 +30,12 @@ entities:
   - entity: sensor.bathroom_air_temp
     icon: hass:thermometer
     name: Air temperature
+  - entity: sensor.bathroom_temp
+    icon: hass:thermometer
+    name: Temperature
+  - entity: sensor.bathroom_humidity
+    name: Humidity
+    icon: mdi:water-percent
 title: Bathroom
 state_color: true
 show_header_toggle: false

@@ -9,6 +9,7 @@
         unit: 10
         address: 0
         value: "{{ (states('input_number.bedroom_main_brightness'))|int }}"
+        
 - alias: "Bedroom main light brightness get"
   trigger:
     platform: state
@@ -18,6 +19,7 @@
       data_template:
         entity_id: input_number.bedroom_main_brightness
         value: "{{ (states('sensor.bedroom_main_brightness'))|int }}"
+        
 - alias: "Bedroom led light brightness set" 
   trigger:
     platform: state
@@ -29,6 +31,7 @@
         unit: 10
         address: 1
         value: "{{ (states('input_number.bedroom_led_brightness'))|int }}"
+        
 - alias: "Bedroom led light brightness get"
   trigger:
     platform: state
@@ -50,6 +53,7 @@
         unit: 11
         address: 0
         value: "{{ (states('input_number.playroom_main_brightness'))|int }}"
+        
 - alias: "Playroom main light brightness get"
   trigger:
     platform: state
@@ -59,6 +63,7 @@
       data_template:
         entity_id: input_number.playroom_main_brightness
         value: "{{ (states('sensor.playroom_main_brightness'))|int }}"
+        
 - alias: "Playroom led light brightness set" 
   trigger:
     platform: state
@@ -70,6 +75,7 @@
         unit: 11
         address: 1
         value: "{{ (states('input_number.playroom_led_brightness'))|int }}"
+        
 - alias: "Playroom led light brightness get"
   trigger:
     platform: state
@@ -91,6 +97,7 @@
         unit: 12
         address: 0
         value: "{{ (states('input_number.kitchen_main_brightness'))|int }}"
+        
 - alias: "Kitchen main light brightness get"
   trigger:
     platform: state
@@ -100,6 +107,7 @@
       data_template:
         entity_id: input_number.kitchen_main_brightness
         value: "{{ (states('sensor.kitchen_main_brightness'))|int }}"
+        
 - alias: "Kitchen led light brightness set" 
   trigger:
     platform: state
@@ -111,6 +119,7 @@
         unit: 12
         address: 1
         value: "{{ (states('input_number.kitchen_led_brightness'))|int }}"
+        
 - alias: "Kitchen led light brightness get"
   trigger:
     platform: state
@@ -132,6 +141,7 @@
         unit: 31
         address: 1
         value: "{{ (states('input_number.balcony_thermostat_temp'))|int }}"
+        
 - alias: "Balcony thermostat temperature get"
   trigger:
     platform: state
@@ -153,6 +163,7 @@
         unit: 50
         address: 1
         value: "{{ (states('input_number.bathroom_thermostat_temp'))|int }}"
+        
 - alias: "Bathroom thermostat temperature get"
   trigger:
     platform: state
@@ -162,3 +173,48 @@
       data_template:
         entity_id: input_number.bathroom_thermostat_temp
         value: "{{ (states('sensor.bathroom_thermostat_temp'))|int }}"
+ 
+- alias: "Bathroom light brightness set" 
+  trigger:
+    platform: state
+    entity_id: input_number.bathroom_brightness
+  action:
+    - service: modbus.write_register
+      data_template:
+        hub: modbus
+        unit: 32
+        address: 0
+        value: "{{ (states('input_number.bathroom_brightness'))|int }}"
+        
+- alias: "Bathroom light brightness get"
+  trigger:
+    platform: state
+    entity_id: sensor.bathroom_brightness
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.bathroom_brightness
+        value: "{{ (states('sensor.bathroom_brightness'))|int }}"
+
+- alias: "Toilet light brightness set" 
+  trigger:
+    platform: state
+    entity_id: input_number.toilet_brightness
+  action:
+    - service: modbus.write_register
+      data_template:
+        hub: modbus
+        unit: 32
+        address: 5
+        value: "{{ (states('input_number.toilet_brightness'))|int }}"
+        
+- alias: "Toilet light brightness get"
+  trigger:
+    platform: state
+    entity_id: sensor.toilet_brightness
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.toilet_brightness
+        value: "{{ (states('sensor.toilet_brightness'))|int }}"
+ 
