@@ -12,3 +12,41 @@
   value_template: "{{ value_json.humidity | round(0) }}"
   availability_topic: "zigbee2mqtt/bridge/state"
   device_class: "humidity"
+- platform: template
+  sensors:
+    power_power1:
+      friendly_name: "Power 1"
+      unit_of_measurement: 'W'
+      value_template: '{{ (states("sensor.power_voltage") |float * states("sensor.power_current1") | float * states("sensor.power_pf1") | float) | round(1) }}'
+    power_power2:
+      friendly_name: "Power 2"
+      unit_of_measurement: 'W'
+      value_template: '{{ (states("sensor.power_voltage") |float * states("sensor.power_current2") | float * states("sensor.power_pf2") | float) | round(1) }}'
+    power_power3:
+      friendly_name: "Power 3"
+      unit_of_measurement: 'W'
+      value_template: '{{ (states("sensor.power_voltage") |float * states("sensor.power_current3") | float * states("sensor.power_pf3") | float) | round(1) }}'
+    power_power4:
+      friendly_name: "Power 4"
+      unit_of_measurement: 'W'
+      value_template: '{{ (states("sensor.power_voltage") |float * states("sensor.power_current4") | float * states("sensor.power_pf4") | float) | round(1) }}'
+    power_power5:
+      friendly_name: "Power 5"
+      unit_of_measurement: 'W'
+      value_template: '{{ (states("sensor.power_voltage") |float * states("sensor.power_current5") | float * states("sensor.power_pf5") | float) | round(1) }}'
+    power_power6:
+      friendly_name: "Power 6"
+      unit_of_measurement: 'W'
+      value_template: '{{ (states("sensor.power_voltage") |float * states("sensor.power_current6") | float * states("sensor.power_pf6") | float) | round(1) }}'
+    power_power7:
+      friendly_name: "Power 7"
+      unit_of_measurement: 'W'
+      value_template: '{{ (states("sensor.power_voltage") |float * states("sensor.power_current7") | float * states("sensor.power_pf7") | float) | round(1) }}'
+    power_power8:
+      friendly_name: "Power 8"
+      unit_of_measurement: 'W'
+      value_template: '{{ (states("sensor.power_voltage") |float * states("sensor.power_current8") | float * states("sensor.power_pf8") | float) | round(1) }}'
+    power_power9:
+      friendly_name: "Power 9"
+      unit_of_measurement: 'W'
+      value_template: '{{ (states("sensor.power_voltage") |float * states("sensor.power_current9") | float * states("sensor.power_pf9") | float) | round(1) }}'

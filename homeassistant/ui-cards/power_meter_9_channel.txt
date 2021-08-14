@@ -1,0 +1,94 @@
+type: entities
+entities:
+  - entity: switch.power_switch
+    name: Power
+    icon: mdi:flash
+  - entity: sensor.power_voltage
+    name: Voltage
+    icon: mdi:flash
+  - entity: sensor.power_frequency
+    name: Frequency
+    icon: mdi:power-plug
+  - entity: sensor.power_current1
+    name: Current 1
+    icon: mdi:sine-wave
+  - entity: sensor.power_power1
+    name: Power 1
+    icon: mdi:battery-charging
+  - entity: sensor.power_pf1
+    name: Power factor 1
+    icon: mdi:power-plug
+  - entity: sensor.power_current2
+    name: Current 2
+    icon: mdi:sine-wave
+  - entity: sensor.power_power2
+    name: Power 2
+    icon: mdi:battery-charging
+  - entity: sensor.power_pf2
+    name: Power factor 2
+    icon: mdi:power-plug
+  - entity: sensor.power_current3
+    name: Current 3
+    icon: mdi:sine-wave
+  - entity: sensor.power_power3
+    name: Power 3
+    icon: mdi:battery-charging
+  - entity: sensor.power_pf3
+    name: Power factor 3
+    icon: mdi:power-plug
+  - entity: sensor.power_current4
+    name: Current 4
+    icon: mdi:sine-wave
+  - entity: sensor.power_power4
+    name: Power 4
+    icon: mdi:battery-charging
+  - entity: sensor.power_pf4
+    name: Power factor 4
+    icon: mdi:power-plug
+  - entity: sensor.power_current5
+    name: Current 5
+    icon: mdi:sine-wave
+  - entity: sensor.power_power5
+    name: Power 5
+    icon: mdi:battery-charging
+  - entity: sensor.power_pf5
+    name: Power factor 5
+    icon: mdi:power-plug
+  - entity: sensor.power_current6
+    name: Current 6
+    icon: mdi:sine-wave
+  - entity: sensor.power_power6
+    name: Power 6
+    icon: mdi:battery-charging
+  - entity: sensor.power_pf6
+    name: Power factor 6
+    icon: mdi:power-plug
+  - entity: sensor.power_current7
+    name: Current 7
+    icon: mdi:sine-wave
+  - entity: sensor.power_power7
+    name: Power 7
+    icon: mdi:battery-charging
+  - entity: sensor.power_pf7
+    name: Power factor 7
+    icon: mdi:power-plug
+  - entity: sensor.power_current8
+    name: Current 8
+    icon: mdi:sine-wave
+  - entity: sensor.power_power8
+    name: Power 8
+    icon: mdi:battery-charging
+  - entity: sensor.power_pf8
+    name: Power factor 8
+    icon: mdi:power-plug
+  - entity: sensor.power_current9
+    name: Current 9
+    icon: mdi:sine-wave
+  - entity: sensor.power_power9
+    name: Power 9
+    icon: mdi:battery-charging
+  - entity: sensor.power_pf9
+    name: Power factor 9
+    icon: mdi:power-plug
+title: Power meter 9 channel
+state_color: false

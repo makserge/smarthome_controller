@@ -149,6 +149,13 @@ switches:
       verify:
       scan_interval: 600
       
+    - name: power_switch
+      slave: 3
+      address: 0
+      write_type: coil
+      verify:
+      scan_interval: 10
+      
 binary_sensors:
     - name: balcony_thermostat_state
       slave: 31
@@ -359,7 +366,7 @@ sensors:
       input_type: input
       scale: 0.1
       offset: 0
-      precision: 1
+      precision: 2
       scan_interval: 300
     - name: total_power_current
       unit_of_measurement: A
@@ -370,7 +377,7 @@ sensors:
       input_type: input
       scale: 0.001
       offset: 0
-      precision: 1
+      precision: 2
       scan_interval: 300
     - name: total_power_power
       unit_of_measurement: W
@@ -404,9 +411,188 @@ sensors:
       precision: 1
       scan_interval: 300
     - name: total_power_pf
-      unit_of_measurement: Pf
       slave: 1
       address: 8
+      input_type: input
+      scale: 0.01
+      offset: 0
+      precision: 1
+      scan_interval: 300
+    - name: power_frequency
+      unit_of_measurement: Hz
+      slave: 3
+      address: 0
+      input_type: input
+      scale: 0.01
+      offset: 0
+      precision: 2
+      scan_interval: 300 
+    - name: power_voltage
+      unit_of_measurement: V
+      slave: 3
+      address: 1
+      input_type: input
+      scale: 0.01
+      offset: 0
+      precision: 2
+      scan_interval: 300
+    - name: power_current1
+      unit_of_measurement: A
+      slave: 3
+      address: 5
+      swap: word
+      input_type: input
+      scale: 0.01
+      offset: 0
+      precision: 2
+      scan_interval: 300
+    - name: power_current2
+      unit_of_measurement: A
+      slave: 3
+      address: 6
+      swap: word
+      input_type: input
+      scale: 0.01
+      offset: 0
+      precision: 2
+      scan_interval: 300
+    - name: power_current3
+      unit_of_measurement: A
+      slave: 3
+      address: 7
+      swap: word
+      input_type: input
+      scale: 0.01
+      offset: 0
+      precision: 2
+      scan_interval: 300
+    - name: power_current4
+      unit_of_measurement: A
+      slave: 3
+      address: 8
+      swap: word
+      input_type: input
+      scale: 0.01
+      offset: 0
+      precision: 2
+      scan_interval: 300
+    - name: power_current5
+      unit_of_measurement: A
+      slave: 3
+      address: 9
+      swap: word
+      input_type: input
+      scale: 0.01
+      offset: 0
+      precision: 2
+      scan_interval: 300
+    - name: power_current6
+      unit_of_measurement: A
+      slave: 3
+      address: 10
+      swap: word
+      input_type: input
+      scale: 0.01
+      offset: 0
+      precision: 2
+      scan_interval: 300
+    - name: power_current7
+      unit_of_measurement: A
+      slave: 3
+      address: 11
+      swap: word
+      input_type: input
+      scale: 0.01
+      offset: 0
+      precision: 2
+      scan_interval: 300
+    - name: power_current8
+      unit_of_measurement: A
+      slave: 3
+      address: 12
+      swap: word
+      input_type: input
+      scale: 0.01
+      offset: 0
+      precision: 2
+      scan_interval: 300
+    - name: power_current9
+      unit_of_measurement: A
+      slave: 3
+      address: 13
+      swap: word
+      input_type: input
+      scale: 0.01
+      offset: 0
+      precision: 2
+      scan_interval: 300
+    - name: power_pf1
+      slave: 3
+      address: 14
+      input_type: input
+      scale: 0.01
+      offset: 0
+      precision: 1
+      scan_interval: 300
+    - name: power_pf2
+      slave: 3
+      address: 15
+      input_type: input
+      scale: 0.01
+      offset: 0
+      precision: 1
+      scan_interval: 300
+    - name: power_pf3
+      slave: 3
+      address: 16
+      input_type: input
+      scale: 0.01
+      offset: 0
+      precision: 1
+      scan_interval: 300
+    - name: power_pf4
+      slave: 3
+      address: 17
+      input_type: input
+      scale: 0.01
+      offset: 0
+      precision: 1
+      scan_interval: 300
+    - name: power_pf5
+      slave: 3
+      address: 18
+      input_type: input
+      scale: 0.01
+      offset: 0
+      precision: 1
+      scan_interval: 300
+    - name: power_pf6
+      slave: 3
+      address: 19
+      input_type: input
+      scale: 0.01
+      offset: 0
+      precision: 1
+      scan_interval: 300
+    - name: power_pf7
+      slave: 3
+      address: 20
+      input_type: input
+      scale: 0.01
+      offset: 0
+      precision: 1
+      scan_interval: 300
+    - name: power_pf8
+      slave: 3
+      address: 21
+      input_type: input
+      scale: 0.01
+      offset: 0
+      precision: 1
+      scan_interval: 300
+    - name: power_pf9
+      slave: 3
+      address: 22
       input_type: input
       scale: 0.01
       offset: 0
