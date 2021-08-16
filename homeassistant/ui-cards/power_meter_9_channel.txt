@@ -1,8 +1,5 @@
 type: entities
 entities:
-  - entity: switch.power_switch
-    name: Power
-    icon: mdi:flash
   - entity: sensor.power_voltage
     name: Voltage
     icon: mdi:flash

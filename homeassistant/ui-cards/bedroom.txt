@@ -10,6 +10,12 @@ entities:
     name: Led light
   - entity: input_number.bedroom_led_brightness
     icon: mdi:lightbulb
+  - entity: switch.playroom_left_bra_switch
+    icon: mdi:lightbulb
+    name: Left bra light
+  - entity: switch.playroom_right_bra_switch
+    icon: mdi:lightbulb
+    name: Right bra light
   - entity: sensor.bedroom_co2
     icon: hass:molecule-co2
     name: CO2

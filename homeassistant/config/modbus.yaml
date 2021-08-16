@@ -22,6 +22,18 @@ switches:
       write_type: coil
       verify:
       scan_interval: 10
+    - name: playroom_left_bra_switch
+      slave: 42
+      address: 0
+      write_type: coil
+      verify:
+      scan_interval: 10
+    - name: playroom_right_bra_switch
+      slave: 43
+      address: 0
+      write_type: coil
+      verify:
+      scan_interval: 10
       
     - name: playroom_main_switch
       slave: 11
@@ -35,7 +47,13 @@ switches:
       write_type: coil
       verify:
       scan_interval: 10
-      
+    - name: playroom_bra_switch
+      slave: 41
+      address: 0
+      write_type: coil
+      verify:
+      scan_interval: 10
+
     - name: kitchen_main_switch
       slave: 12
       address: 0
@@ -149,8 +167,8 @@ switches:
       verify:
       scan_interval: 600
       
-    - name: power_switch
-      slave: 3
+    - name: hall_switch
+      slave: 40
       address: 0
       write_type: coil
       verify:
