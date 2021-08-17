@@ -1,0 +1,56 @@
+bedroom_main_brightness:
+  name: Main light brightness
+  min: 10
+  max: 100
+  step: 5
+bedroom_led_brightness:
+  name: Led light brightness
+  min: 10
+  max: 100
+  step: 5
+    
+playroom_main_brightness:
+  name: Main light brightness
+  min: 10
+  max: 100
+  step: 5
+playroom_led_brightness:
+  name: Led light brightness
+  min: 10
+  max: 100
+  step: 5
+    
+kitchen_main_brightness:
+  name: Main light brightness
+  min: 10
+  max: 100
+  step: 5
+kitchen_led_brightness:
+  name: Led light brightness
+  min: 10
+  max: 100
+  step: 5
+    
+balcony_thermostat_temp:
+  name: Balcony thermostat temperature
+  min: 25
+  max: 40
+  step: 1
+ 
+bathroom_thermostat_temp:
+  name: Bathroom thermostat temperature
+  min: 25
+  max: 40
+  step: 1
+    
+bathroom_brightness:
+  name: Bathroom light brightness
+  min: 10
+  max: 100
+  step: 5
+    
+toilet_brightness:
+  name: Toilet light brightness
+  min: 10
+  max: 100
+  step: 5

@@ -4,14 +4,14 @@ recorder:
   
 logger:
   default: fatal
-  logs:
-    homeassistant.core: fatal
-    homeassistant.components.modbus: debug
-    pymodbus.client: debug
-    pymodbus.client.sync: debug
-    pymodbus.transaction: debug
-    pymodbus.framer.rtu_framer: debug
-    pymodbus.factory: debug
+ # logs:
+ #   homeassistant.core: fatal
+ #   homeassistant.components.modbus: debug
+ #   pymodbus.client: debug
+ #   pymodbus.client.sync: debug
+ #   pymodbus.transaction: debug
+ #   pymodbus.framer.rtu_framer: debug
+ #   pymodbus.factory: debug
   
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
@@ -26,6 +26,9 @@ script: !include scripts.yaml
 scene: !include scenes.yaml
 sensor: !include sensors.yaml
 modbus: !include modbus.yaml
+input_number: !include input_number.yaml
+input_boolean: !include input_boolean.yaml
+climate: !include climate.yaml
 
 mqtt:
   discovery: true
@@ -33,61 +36,3 @@ mqtt:
   will_message:
     topic: 'homeassistant/status'
     payload: 'offline'
-    
-input_number:
-  bedroom_main_brightness:
-    name: Main light brightness
-    min: 10
-    max: 100
-    step: 5
-  bedroom_led_brightness:
-    name: Led light brightness
-    min: 10
-    max: 100
-    step: 5
-    
-  playroom_main_brightness:
-    name: Main light brightness
-    min: 10
-    max: 100
-    step: 5
-  playroom_led_brightness:
-    name: Led light brightness
-    min: 10
-    max: 100
-    step: 5
-    
-  kitchen_main_brightness:
-    name: Main light brightness
-    min: 10
-    max: 100
-    step: 5
-  kitchen_led_brightness:
-    name: Led light brightness
-    min: 10
-    max: 100
-    step: 5
-    
-  balcony_thermostat_temp:
-    name: Balcony thermostat temperature
-    min: 25
-    max: 40
-    step: 1
-    
-  bathroom_thermostat_temp:
-    name: Bathroom thermostat temperature
-    min: 25
-    max: 40
-    step: 1
-    
-  bathroom_brightness:
-    name: Bathroom light brightness
-    min: 10
-    max: 100
-    step: 5
-    
-  toilet_brightness:
-    name: Toilet light brightness
-    min: 10
-    max: 100
-    step: 5

@@ -218,3 +218,53 @@
         entity_id: input_number.toilet_brightness
         value: "{{ (states('sensor.toilet_brightness'))|int }}"
  
+- alias: "Playroom heater set" 
+  trigger:
+    platform: state
+    entity_id: input_boolean.playroom_heat_valve
+  action:
+    - service: modbus.write_coil
+      data_template:
+        hub: modbus
+        unit: 32
+        address: 5
+        state:  >
+          {%- if states('input_boolean.playroom_heat_valve') == 'on' -%}
+            false
+          {%- else -%}
+            true
+          {%- endif -%}
+          
+- alias: "Bedroom heater set" 
+  trigger:
+    platform: state
+    entity_id: input_boolean.bedroom_heat_valve
+  action:
+    - service: modbus.write_coil
+      data_template:
+        hub: modbus
+        unit: 32
+        address: 6
+        state:  >
+          {%- if states('input_boolean.bedroom_heat_valve') == 'on' -%}
+            false
+          {%- else -%}
+            true
+          {%- endif -%}
+        
+- alias: "Kitchen heater set" 
+  trigger:
+    platform: state
+    entity_id: input_boolean.kitchen_heat_valve
+  action:
+    - service: modbus.write_coil
+      data_template:
+        hub: modbus
+        unit: 32
+        address: 7
+        state:  >
+          {%- if states('input_boolean.kitchen_heat_valve') == 'on' -%}
+            false
+          {%- else -%}
+            true
+          {%- endif -%}

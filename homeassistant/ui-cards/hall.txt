@@ -1,0 +1,8 @@
+type: entities
+entities:
+  - entity: switch.hall_switch
+    name: Light
+    icon: hass:ceiling-light
+title: Hall
+state_color: true
+show_header_toggle: false

@@ -21,14 +21,14 @@ entities:
   - entity: sensor.toilet_presence
     name: Presence
     icon: hass:account
-  - entity: switch.heat_valve_1
-    name: Heat valve 1
+  - entity: switch.playroom_heat_valve
+    name: Playroom heat valve
     icon: mdi:flash
-  - entity: switch.heat_valve_2
-    name: Heat valve 2
+  - entity: switch.bedroom_heat_valve
+    name: Bedroom heat valve
     icon: mdi:flash
-  - entity: switch.heat_valve_3
-    name: Heat valve 3
+  - entity: switch.kitchen_heat_valve
+    name: Kitchen heat valve
     icon: mdi:flash
 title: Toilet
 show_header_toggle: false

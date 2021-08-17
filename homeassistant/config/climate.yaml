@@ -1,0 +1,53 @@
+- platform: generic_thermostat
+  name: playroom_thermostat
+  heater: input_boolean.playroom_heat_valve
+  target_sensor: sensor.playroom_temperature
+  min_temp: 16
+  max_temp: 30
+  ac_mode: false
+  target_temp: 24
+  away_temp: 19
+  cold_tolerance: 0.5
+  hot_tolerance: 0.5
+  min_cycle_duration:
+    minutes: 5
+  keep_alive:
+    minutes: 3
+  initial_hvac_mode: "off"
+  precision: 0.1
+
+- platform: generic_thermostat
+  name: bedroom_thermostat
+  heater: input_boolean.bedroom_heat_valve
+  target_sensor: sensor.bedroom_temperature
+  min_temp: 16
+  max_temp: 30
+  ac_mode: false
+  target_temp: 24
+  away_temp: 19
+  cold_tolerance: 0.5
+  hot_tolerance: 0.5
+  min_cycle_duration:
+    minutes: 5
+  keep_alive:
+    minutes: 3
+  initial_hvac_mode: "off"
+  precision: 0.1
+  
+- platform: generic_thermostat
+  name: kitchen_thermostat
+  heater: input_boolean.kitchen_heat_valve
+  target_sensor: sensor.kitchen_temperature
+  min_temp: 16
+  max_temp: 30
+  ac_mode: false
+  target_temp: 24
+  away_temp: 19
+  cold_tolerance: 0.5
+  hot_tolerance: 0.5
+  min_cycle_duration:
+    minutes: 5
+  keep_alive:
+    minutes: 3
+  initial_hvac_mode: "off"
+  precision: 0.1

@@ -1,0 +1,163 @@
+- name: bedroom_main_switch
+  slave: 10
+  address: 0
+  write_type: coil
+  verify:
+  scan_interval: 10
+- name: bedroom_led_switch
+  slave: 10
+  address: 1
+  write_type: coil
+  verify:
+  scan_interval: 10
+- name: playroom_left_bra_switch
+  slave: 42
+  address: 0
+  write_type: coil
+  verify:
+  scan_interval: 10
+- name: playroom_right_bra_switch
+  slave: 43
+  address: 0
+  write_type: coil
+  verify:
+  scan_interval: 10
+  
+- name: playroom_main_switch
+  slave: 11
+  address: 0
+  write_type: coil
+  verify:
+  scan_interval: 10
+- name: playroom_led_switch
+  slave: 11
+  address: 1
+  write_type: coil
+  verify:
+  scan_interval: 10
+- name: playroom_bra_switch
+  slave: 41
+  address: 0
+  write_type: coil
+  verify:
+  scan_interval: 10
+
+- name: kitchen_main_switch
+  slave: 12
+  address: 0
+  write_type: coil
+  verify:
+  scan_interval: 10
+- name: kitchen_led_switch
+  slave: 12
+  address: 1
+  write_type: coil
+  verify:
+  scan_interval: 10
+  
+- name: balcony_main_switch
+  slave: 31
+  address: 0
+  write_type: coil
+  verify:
+  scan_interval: 10
+- name: balcony_led_switch
+  slave: 31
+  address: 1
+  write_type: coil
+  verify:
+  scan_interval: 10
+- name: balcony_thermostat
+  slave: 31
+  address: 0
+  write_type: holding
+  verify:
+  scan_interval: 10
+  
+- name: bathroom_heater_switch
+  slave: 50
+  address: 1
+  write_type: coil
+  verify:
+  scan_interval: 10
+- name: bathroom_thermostat
+  slave: 50
+  address: 0
+  write_type: holding
+  verify:
+  scan_interval: 10
+- name: bathroom_fan
+  slave: 32
+  address: 0
+  write_type: coil
+  verify:
+  scan_interval: 10
+- name: bathroom_light
+  slave: 32
+  address: 2
+  write_type: coil
+  verify:
+  scan_interval: 10
+- name: bathroom_fan_auto
+  slave: 32
+  address: 1
+  write_type: holding
+  verify:
+  scan_interval: 300
+  
+- name: toilet_fan
+  slave: 32
+  address: 1
+  write_type: coil
+  verify:
+  scan_interval: 10
+- name: toilet_light
+  slave: 32
+  address: 3
+  write_type: coil
+  verify:
+  scan_interval: 10
+- name: toilet_boiler
+  slave: 32
+  address: 4
+  write_type: coil
+  verify:
+  scan_interval: 10
+- name: toilet_fan_auto
+  slave: 32
+  address: 3
+  write_type: holding
+  verify:
+  scan_interval: 300
+- name: toilet_light_auto
+  slave: 32
+  address: 6
+  write_type: holding
+  verify:
+  scan_interval: 300
+  
+- name: playroom_heat_valve
+  slave: 32
+  address: 5
+  write_type: coil
+  verify:
+  scan_interval: 600
+- name: bedroom_heat_valve
+  slave: 32
+  address: 6
+  write_type: coil
+  verify:
+  scan_interval: 600
+- name: kitchen_heat_valve
+  slave: 32
+  address: 7
+  write_type: coil
+  verify:
+  scan_interval: 600
+  
+- name: hall_switch
+  slave: 40
+  address: 0
+  write_type: coil
+  verify:
+  scan_interval: 10
