@@ -3,9 +3,11 @@ recorder:
   db_url: 'sqlite:///:memory:'
   
 logger:
-  default: fatal
- # logs:
- #   homeassistant.core: fatal
+  default: error
+  logs:
+    homeassistant.core: error
+ #   homeassistant.components.shell_command: debug
+ #   homeassistant.components.command_line: debug
  #   homeassistant.components.modbus: debug
  #   pymodbus.client: debug
  #   pymodbus.client.sync: debug
@@ -29,6 +31,7 @@ modbus: !include modbus.yaml
 input_number: !include input_number.yaml
 input_boolean: !include input_boolean.yaml
 climate: !include climate.yaml
+cover: !include cover.yaml
 
 mqtt:
   discovery: true

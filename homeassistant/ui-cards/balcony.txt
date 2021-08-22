@@ -24,6 +24,8 @@ entities:
   - entity: sensor.balcony_humidity
     icon: hass:water-percent
     name: Humidity
+  - entity: cover.balcony_curtain
+    name: Curtain
 title: Balcony
 state_color: true
 show_header_toggle: false

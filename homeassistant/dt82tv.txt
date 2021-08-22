@@ -1,0 +1,125 @@
+RS485 motor control(Dooya DT82TV and Dooya DM35EQ)
+
+HA Core
+Serial port config: 9600, 8-N-1
+Protocol: Modbus ASCII
+
+1. Set address 01 01 on DT82TV: 
+
+Press button on motor for 4-5s, then LED on motor blinks 2 times then send raw command
+
+55 00 00 02 00 02 01 01 9D 58
+
+LED on motor blinks 5 times for command execution confirmation
+
+2. Set address 01 02 on DT82TV
+
+Press button on motor for 4-5s, then LED on motor blinks 2 times then send raw command
+
+55 00 00 02 00 02 01 02 DD 59
+
+LED on motor blinks 5 times for command execution confirmation
+
+3. Set address FE FE on DM35EQ (default value):
+
+Send raw command to factory reset (connect one motor only since command resets all motors at once)
+
+55 00 00 03 08 29 3A
+
+Motor beeps for command execution confirmation
+
+4. Shell scripts for HA
+
+nano /opt/homeassistant/config/curtains/kitchen_open.sh
+
+#!/bin/bash
+
+echo -en '\x55\x01\x01\x03\x01\xB9\x00' > /dev/ttyS3
+
+
+nano /opt/homeassistant/config/curtains/kitchen_close.sh
+
+#!/bin/bash
+
+echo -en '\x55\x01\x01\x03\x02\xF9\x01' > /dev/ttyS3
+
+
+nano /opt/homeassistant/config/curtains/kitchen_stop.sh
+
+#!/bin/bash
+
+echo -en '\x55\x01\x01\x03\x03\x38\xC1' > /dev/ttyS3
+
+
+5. Fix files permissions in console
+
+cd /opt/homeassistant/config/curtains
+chmod 755 * 
+chown homeassistant.nogroup *
+
+
+6. Created cover.yaml
+
+nano config/cover.yaml
+
+- platform: command_line
+  covers:
+    kitchen_curtain:
+      friendly_name: "Kitchen curtain"
+      command_open: '/opt/homeassistant/config/curtains/kitchen_open.sh'
+      command_close: '/opt/homeassistant/config/curtains/kitchen_close.sh'
+      command_stop: '/opt/homeassistant/config/curtains/kitchen_stop.sh'
+
+7. Added to  config/configuration.yaml
+
+cover: !include cover.yaml
+
+8. Added entity to lovelace's card 
+
+entity: cover.kitchen_curtain
+
+9. Enabled logger in configuration.yaml
+
+logger:
+  default: error
+  logs:
+    homeassistant.core: error
+    homeassistant.components.shell_command: debug
+    homeassistant.components.command_line: debug
+
+10. Restart HA
+
+11. Start checking logs in console 
+
+ tail -f /opt/homeassistant/hass.log
+
+12. Press arrow up on UI card and check logs for similar records
+
+2021-08-22 12:06:21 INFO (SyncWorker_1) [homeassistant.components.command_line.cover] Running command: /opt/homeassistant/config/curtains/kitchen_open.sh
+2021-08-22 12:06:21 DEBUG (SyncWorker_1) [homeassistant.components.command_line] Running command: /opt/homeassistant/config/curtains/kitchen_open.sh
+
+Then motor should start
+
+13. Press arrow down on UI card and check logs for similar records
+
+2021-08-22 12:07:36 INFO (SyncWorker_0) [homeassistant.components.command_line.cover] Running command: /opt/homeassistant/config/curtains/kitchen_close.sh
+2021-08-22 12:07:36 DEBUG (SyncWorker_0) [homeassistant.components.command_line] Running command: /opt/homeassistant/config/curtains/kitchen_close.sh
+
+Then motor should be reversed
+
+14. Press stop on UI card and check logs for similar records
+
+2021-08-22 12:08:37 INFO (SyncWorker_4) [homeassistant.components.command_line.cover] Running command: /opt/homeassistant/config/curtains/kitchen_stop.sh
+2021-08-22 12:08:37 DEBUG (SyncWorker_4) [homeassistant.components.command_line] Running command: /opt/homeassistant/config/curtains/kitchen_stop.sh
+
+Then motor should stop
+
+NB:
+Command rules:
+For example: 5500000301E93C, where “55” is prefix, 00 00 - address (broadcast for this case), 03 - command mode, 01 - open action, E93С - CRC16. 
+CRC16 claculation: Go to https://crccalc.com/ and enter value 5500000301
+Input type: HEX
+Press button Calc CRC-16. 
+Get Result for CRC-16/MODBUS row - 0x3CE9
+
+Bytes in result should be reversed, i.e. result will be 3СE9, but in Modbus command ЗС and E9 should be swapped.

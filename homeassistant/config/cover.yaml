@@ -1,0 +1,17 @@
+- platform: command_line
+  covers:
+    kitchen_curtain:
+      friendly_name: "Kitchen curtain"
+      command_open: '/opt/homeassistant/config/curtains/kitchen_open.sh'
+      command_close: '/opt/homeassistant/config/curtains/kitchen_close.sh'
+      command_stop: '/opt/homeassistant/config/curtains/kitchen_stop.sh'
+    playroom_curtain:
+      friendly_name: "Playroom curtain"
+      command_open: '/opt/homeassistant/config/curtains/playroom_open.sh'
+      command_close: '/opt/homeassistant/config/curtains/playroom_close.sh'
+      command_stop: '/opt/homeassistant/config/curtains/playroom_stop.sh'
+    balcony_curtain:
+      friendly_name: "Balcony curtain"
+      command_open: '/opt/homeassistant/config/curtains/balcony_open.sh'
+      command_close: '/opt/homeassistant/config/curtains/balcony_close.sh'
+      command_stop: '/opt/homeassistant/config/curtains/balcony_stop.sh'

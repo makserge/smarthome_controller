@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo -en '\x55\x01\x01\x03\x03\x38\xC1' > /dev/ttyS3

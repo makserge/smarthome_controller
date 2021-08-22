@@ -27,6 +27,7 @@ entities:
   - entity: sensor.bedroom_light_level
     name: Illumination
     icon: mdi:weather-sunny
+  - entity: input_boolean.bedroom_heat_valve
 title: Bedroom
 state_color: true
 show_header_toggle: false

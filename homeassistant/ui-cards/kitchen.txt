@@ -21,6 +21,9 @@ entities:
   - entity: sensor.kitchen_light_level
     name: Illumination
     icon: mdi:weather-sunny
+  - entity: input_boolean.kitchen_heat_valve
+  - entity: cover.kitchen_curtain
+    name: Curtain
 title: Kitchen
 state_color: true
 show_header_toggle: false
