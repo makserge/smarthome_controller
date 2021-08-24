@@ -22,11 +22,17 @@ armbian / 1234
 
 6. Press Ctrl-c to cancel user creation
 
-7. Setup Wi-Fi network
+7. Setup Wi-Fi and wired network
 
 armbian-config
 
 Network->Wifi->select network->activate
+
+Network->IP->eth0->Static
+
+Set Address, Netmask, Gateway, DNS->Ok->Back->Exit
+
+
 
 8. Update system
 
