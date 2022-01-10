@@ -1,0 +1,22 @@
+type: entities
+entities:
+  - entity: switch.bedroom_main_switch
+    name: Main light
+    icon: hass:ceiling-light
+  - entity: switch.bedroom_left_bra_switch
+    icon: mdi:lightbulb
+    name: Left bra
+  - entity: switch.bedroom_right_bra_switch
+    icon: mdi:lightbulb
+    name: Right bra
+  - entity: sensor.bedroom_co2
+    icon: hass:molecule-co2
+    name: CO2
+  - entity: sensor.bedroom_temperature
+    name: Temperature
+  - entity: sensor.bedroom_humidity
+    name: Humidity
+    icon: mdi:water-percent
+title: Bedroom
+state_color: true
+show_header_toggle: true

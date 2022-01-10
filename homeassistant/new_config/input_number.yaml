@@ -1,0 +1,11 @@
+balcony_thermostat_temp:
+  name: Balcony thermostat temperature
+  min: 22
+  max: 40
+  step: 1
+ 
+bathroom_thermostat_temp:
+  name: Bathroom thermostat temperature
+  min: 22
+  max: 40
+  step: 1

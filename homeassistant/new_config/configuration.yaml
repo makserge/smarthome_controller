@@ -1,0 +1,26 @@
+recorder:
+  purge_keep_days: 7
+  db_url: 'sqlite:///:memory:'
+
+logger:
+  default: error
+  logs:
+    homeassistant.core: error
+ #   homeassistant.components.modbus: debug
+ #   pymodbus.client: debug
+ #   pymodbus.client.sync: debug
+ #   pymodbus.transaction: debug
+ #   pymodbus.framer.rtu_framer: debug
+ #   pymodbus.factory: debug    
+  
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+modbus: !include modbus.yaml
+input_number: !include input_number.yaml
+automation: !include automations.yaml
+

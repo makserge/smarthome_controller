@@ -1,0 +1,16 @@
+type: entities
+entities:
+  - entity: switch.kitchen_main_switch
+    name: Main light
+    icon: hass:ceiling-light
+  - entity: sensor.kitchen_co2
+    icon: hass:molecule-co2
+    name: CO2
+  - entity: sensor.kitchen_temperature
+    name: Temperature
+  - entity: sensor.kitchen_humidity
+    name: Humidity
+    icon: mdi:water-percent
+title: Kitchen
+state_color: true
+show_header_toggle: true

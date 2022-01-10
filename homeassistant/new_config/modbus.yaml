@@ -1,0 +1,14 @@
+name: modbus
+type: serial
+baudrate: 9600
+bytesize: 8
+method: rtu
+parity: N
+port: /dev/ttyS3
+stopbits: 1
+timeout: 9
+delay: 3
+
+switches: !include modbus/switches.yaml
+binary_sensors: !include modbus/binary_sensors.yaml
+sensors: !include modbus/sensors.yaml

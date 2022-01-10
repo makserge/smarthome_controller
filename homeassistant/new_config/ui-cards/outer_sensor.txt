@@ -1,0 +1,10 @@
+type: entities
+entities:
+  - entity: sensor.outer_temperature
+    name: Temperature
+  - entity: sensor.outer_humidity
+    name: Humidity
+    icon: mdi:water-percent
+title: Weather
+state_color: true
+show_header_toggle: false

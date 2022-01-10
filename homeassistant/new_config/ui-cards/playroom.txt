@@ -1,0 +1,16 @@
+type: entities
+entities:
+  - entity: switch.playroom_main_switch
+    name: Main light
+    icon: hass:ceiling-light
+  - entity: sensor.playroom_co2
+    icon: hass:molecule-co2
+    name: CO2
+  - entity: sensor.playroom_temperature
+    name: Temperature
+  - entity: sensor.playroom_humidity
+    name: Humidity
+    icon: mdi:water-percent
+title: Playroom
+state_color: true
+show_header_toggle: true

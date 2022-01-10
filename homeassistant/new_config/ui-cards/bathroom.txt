@@ -1,0 +1,17 @@
+type: entities
+entities:
+  - entity: switch.bathroom_thermostat
+    icon: mdi:thermostat
+    name: Thermostat
+  - entity: binary_sensor.bathroom_thermostat_state
+    name: Thermostat state
+    icon: mdi:thermostat
+  - entity: input_number.bathroom_thermostat_temp
+    name: Thermostat temperature
+    icon: mdi:thermostat
+  - entity: sensor.bathroom_floor_temp
+    icon: hass:thermometer
+    name: Floor temperature
+title: Bathroom
+state_color: true
+show_header_toggle: false
