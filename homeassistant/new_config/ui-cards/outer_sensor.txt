@@ -1,10 +1,12 @@
-type: entities
+type: glance
 entities:
   - entity: sensor.outer_temperature
     name: Temperature
   - entity: sensor.outer_humidity
     name: Humidity
     icon: mdi:water-percent
+show_name: false
+show_state: true
+show_icon: true
+state_color: false
 title: Weather
-state_color: true
-show_header_toggle: false

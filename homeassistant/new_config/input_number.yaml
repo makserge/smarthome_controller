@@ -1,11 +1,23 @@
-balcony_thermostat_temp:
-  name: Balcony thermostat temperature
+ventmachine_speed:
+  name: Ventmachine speed
+  min: 0
+  max: 3
+  step: 1
+ 
+ventmachine_temp:
+  name: Ventmachine temperature
+  min: 2
+  max: 25
+  step: 1
+  
+bathroom_thermostat_temp:
+  name: Bathroom thermostat temperature
   min: 22
   max: 40
   step: 1
- 
-bathroom_thermostat_temp:
-  name: Bathroom thermostat temperature
+  
+balcony_thermostat_temp:
+  name: Balcony thermostat temperature
   min: 22
   max: 40
   step: 1

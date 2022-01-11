@@ -1,24 +1,46 @@
-- alias: "Balcony thermostat temperature set" 
+- alias: "Ventmachine speed set" 
   trigger:
     platform: state
-    entity_id: input_number.balcony_thermostat_temp
+    entity_id: input_number.ventmachine_speed
   action:
     - service: modbus.write_register
       data_template:
-        hub: modbus
-        unit: 31
-        address: 1
-        value: "{{ (states('input_number.balcony_thermostat_temp'))|int }}"
+        hub: tcp
+        unit: 1
+        address: 0
+        value: "{{ (states('input_number.ventmachine_speed'))|int }}"
         
-- alias: "Balcony thermostat temperature get"
+- alias: "Ventmachine speed get"
   trigger:
     platform: state
-    entity_id: sensor.balcony_thermostat_temp
+    entity_id: sensor.ventmachine_speed
   action:
     - service: input_number.set_value
       data_template:
-        entity_id: input_number.balcony_thermostat_temp
-        value: "{{ (states('sensor.balcony_thermostat_temp'))|int }}"
+        entity_id: input_number.ventmachine_speed
+        value: "{{ (states('sensor.ventmachine_speed'))|int }}"
+        
+- alias: "Ventmachine temperature set" 
+  trigger:
+    platform: state
+    entity_id: input_number.ventmachine_temp
+  action:
+    - service: modbus.write_register
+      data_template:
+        hub: tcp
+        unit: 1
+        address: 1
+        value: "{{ (states('input_number.ventmachine_temp'))|int }}"
+        
+- alias: "Ventmachine temperature get"
+  trigger:
+    platform: state
+    entity_id: sensor.ventmachine_temp
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.ventmachine_temp
+        value: "{{ (states('sensor.ventmachine_temp'))|int }}"
         
 - alias: "Bathroom thermostat temperature set" 
   trigger:
@@ -27,7 +49,7 @@
   action:
     - service: modbus.write_register
       data_template:
-        hub: modbus
+        hub: serial
         unit: 50
         address: 1
         value: "{{ (states('input_number.bathroom_thermostat_temp'))|int }}"
@@ -41,3 +63,25 @@
       data_template:
         entity_id: input_number.bathroom_thermostat_temp
         value: "{{ (states('sensor.bathroom_thermostat_temp'))|int }}"
+        
+- alias: "Balcony thermostat temperature set" 
+  trigger:
+    platform: state
+    entity_id: input_number.balcony_thermostat_temp
+  action:
+    - service: modbus.write_register
+      data_template:
+        hub: serial
+        unit: 31
+        address: 1
+        value: "{{ (states('input_number.balcony_thermostat_temp'))|int }}"
+        
+- alias: "Balcony thermostat temperature get"
+  trigger:
+    platform: state
+    entity_id: sensor.balcony_thermostat_temp
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.balcony_thermostat_temp
+        value: "{{ (states('sensor.balcony_thermostat_temp'))|int }}"

@@ -4,14 +4,14 @@
   write_type: coil
   verify:
   scan_interval: 10
-
+  
 - name: playroom_main_switch
   slave: 11
   address: 0
   write_type: coil
   verify:
   scan_interval: 10
-
+  
 - name: bedroom_main_switch
   slave: 12
   address: 0
@@ -31,6 +31,13 @@
   verify:
   scan_interval: 10
   
+- name: bathroom_thermostat
+  slave: 50
+  address: 0
+  write_type: holding
+  verify:
+  scan_interval: 10
+  
 - name: balcony_main_switch
   slave: 31
   address: 1
@@ -39,13 +46,6 @@
   scan_interval: 10
 - name: balcony_thermostat
   slave: 31
-  address: 0
-  write_type: holding
-  verify:
-  scan_interval: 10
-
-- name: bathroom_thermostat
-  slave: 50
   address: 0
   write_type: holding
   verify:

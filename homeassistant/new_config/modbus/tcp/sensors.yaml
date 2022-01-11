@@ -1,0 +1,12 @@
+- name: ventmachine_speed
+  slave: 0
+  address: 0
+  input_type: holding
+  data_type: uint16
+  scan_interval: 900
+- name: ventmachine_temp
+  slave: 0
+  address: 1
+  input_type: holding
+  data_type: uint16
+  scan_interval: 900

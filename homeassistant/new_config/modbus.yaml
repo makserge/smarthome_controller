@@ -1,14 +1,18 @@
-name: modbus
-type: serial
-baudrate: 9600
-bytesize: 8
-method: rtu
-parity: N
-port: /dev/ttyS3
-stopbits: 1
-timeout: 9
-delay: 3
+- name: tcp
+  type: tcp
+  host: 192.168.88.5
+  port: 502
+  sensors: !include modbus/tcp/sensors.yaml
 
-switches: !include modbus/switches.yaml
-binary_sensors: !include modbus/binary_sensors.yaml
-sensors: !include modbus/sensors.yaml
+- name: serial
+  type: serial
+  baudrate: 9600
+  bytesize: 8
+  method: rtu
+  parity: N
+  port: /dev/ttyS3
+  stopbits: 1
+  timeout: 9
+  sensors: !include modbus/serial/sensors.yaml
+  switches: !include modbus/serial/switches.yaml
+  binary_sensors: !include modbus/serial/binary_sensors.yaml

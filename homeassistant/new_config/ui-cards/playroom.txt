@@ -1,16 +1,21 @@
-type: entities
-entities:
-  - entity: switch.playroom_main_switch
-    name: Main light
+type: grid
+cards:
+  - type: button
+    tap_action:
+      action: toggle
+    entity: switch.playroom_main_switch
     icon: hass:ceiling-light
-  - entity: sensor.playroom_co2
-    icon: hass:molecule-co2
-    name: CO2
-  - entity: sensor.playroom_temperature
-    name: Temperature
-  - entity: sensor.playroom_humidity
-    name: Humidity
-    icon: mdi:water-percent
-title: Playroom
-state_color: true
-show_header_toggle: true
+    show_name: false
+  - type: entities
+    entities:
+      - entity: sensor.playroom_co2
+        icon: hass:molecule-co2
+        name: CO2
+      - entity: sensor.playroom_temperature
+        name: Temperature
+      - entity: sensor.playroom_humidity
+        name: Humidity
+        icon: mdi:water-percent
+    show_header_toggle: false
+columns: 2
+square: false

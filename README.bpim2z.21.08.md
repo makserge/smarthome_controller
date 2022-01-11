@@ -42,7 +42,21 @@ apt upgrade
 
 timedatectl set-timezone Europe/Kiev
 
-10. Install Mosquitto
+10. Disable automatic updates
+
+sudo nano /etc/apt/apt.conf.d/20auto-upgrades
+
+replace
+
+APT::Periodic::Update-Package-Lists "1";
+APT::Periodic::Unattended-Upgrade "1";
+
+to 
+
+APT::Periodic::Update-Package-Lists "0";
+APT::Periodic::Unattended-Upgrade "0";
+
+11. Install Mosquitto
 
 apt install mosquitto -y
 
@@ -58,7 +72,7 @@ password_file /etc/mosquitto/passwd
 
 systemctl restart mosquitto
 
-11. Connect OLED to SBC
+12. Connect OLED to SBC
 
 Pin		OLED	SBC
 
@@ -67,13 +81,13 @@ GND  	GND		GND
 SCL		SCL		5
 SDA		SDA		3
 
-12. Enable I2C
+13. Enable I2C
 
 armbian-config
 
 System->Hardware->Select i2c0->Save->Back->Reboot
 
-13. Install OLED status monitor
+14. Install OLED status monitor
 
 git clone https://github.com/makserge/WiringOP.git -b h3 
 cd WiringOP
@@ -171,7 +185,7 @@ systemctl start pushbuttons
 systemctl enable pushbuttons.service
 
 
-14. Enable UART2, UART3
+15. Enable UART2, UART3
 
 armbian-config
 
@@ -193,7 +207,7 @@ exit 0
  
 reboot
 
-15. Check UART2, UART3
+16. Check UART2, UART3
 
 stty -F /dev/ttyS2
 
@@ -205,7 +219,7 @@ stty -F /dev/ttyS3
 speed 9600 baud; line = 0;
 -brkint -imaxbel
 
-16. Setup watchdog
+17. Setup watchdog
 
 nano /root/blink.sh
 
@@ -269,7 +283,7 @@ Enable
 
 sudo systemctl enable watchdogblink.service
 
-17. Setup RTC
+18. Setup RTC
 
 hwclock -f /dev/rtc0 -w
 
@@ -286,7 +300,7 @@ crontab -e
 
 0 0 * * * timedatectl --adjust-system-clock; sudo hwclock -w
 
-18. Temporary increase SWAP to 1GB
+19. Temporary increase SWAP to 1GB
 
 rm -rf /dev/zram2
 zramctl --reset /dev/zram2
@@ -307,46 +321,46 @@ mkswap /dev/zram4
 swapon /dev/zram4 --priority 4
 
 
-19. Install Home Assistant dependencies
+20. Install Home Assistant dependencies
 
 sudo apt install python3-dev python3-pip python3-venv libffi-dev libjpeg-dev
 
-20. Create Home Assistant user and group
+21. Create Home Assistant user and group
 
 sudo adduser --system homeassistant && addgroup homeassistant
 sudo adduser homeassistant dialout
 
-21. Create homeassistant folder and change permissions
+22. Create homeassistant folder and change permissions
 
 sudo mkdir /opt/homeassistant
 sudo chown homeassistant:homeassistant /opt/homeassistant
 
-22. Change user
+23. Change user
 
 sudo su -s /bin/bash homeassistant
 
-23. Create Python venv
+24. Create Python venv
 
 cd /opt/homeassistant
 python3 -m venv /opt/homeassistant
 source bin/activate
 
-24. Add Rust
+25. Add Rust
 
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 source $HOME/.cargo/env
 
-25. Install Home Assistant
+26. Install Home Assistant
 
 python3 -m pip install wheel
 
 pip3 install homeassistant
 
-26. Create Home Assistant config folder
+27. Create Home Assistant config folder
 
 mkdir /opt/homeassistant/config
 
-27. Add Home Assistant to autostart
+28. Add Home Assistant to autostart
 
 exit
 
@@ -364,12 +378,12 @@ ExecStart=/opt/homeassistant/bin/hass -c /opt/homeassistant/config --log-file /o
 [Install]
 WantedBy=multi-user.target
 
-28. Enable autostart for Home Assistant
+29. Enable autostart for Home Assistant
 
 sudo systemctl --system daemon-reload
 sudo systemctl enable hass && systemctl start hass
 
-29. Check status
+30. Check status
 
 systemctl status hass
 
@@ -383,12 +397,12 @@ systemctl status hass
      CGroup: /system.slice/hass.service
              └─1222 /opt/homeassistant/bin/python3 /opt/homeassistant/bin/hass >
 
-30. Open Browser on http://myipaddress:8123 and finish onboarding
+31. Open Browser on http://myipaddress:8123 and finish onboarding
 
 https://www.home-assistant.io/getting-started/onboarding/
 
 
-31. Configure Modbus RTU
+32. Configure Modbus RTU
 
 nano /opt/homeassistant/config/configuration.yaml
  
@@ -414,7 +428,7 @@ timeout: 4
 delay: 3
 
 
-32. Add light switch
+33. Add light switch
 
 nano /opt/homeassistant/config/modbus.yaml  
 
@@ -437,7 +451,7 @@ lights:
 
 Edit dashboard->Add card->By Entity->Select "Light 4"->Continue->Add to lovelace UI	
 
-33. Add switch
+34. Add switch
 
 nano /opt/homeassistant/config/modbus.yaml  
 
@@ -461,7 +475,7 @@ switches:
 
 Edit dashboard->Add card->By Entity->Select "Switch 4"->Continue->Add to lovelace UI
 
-34. Add binary sensor
+35. Add binary sensor
 
 nano /opt/homeassistant/config/modbus.yaml  
 
