@@ -1,0 +1,32 @@
+type: entities
+entities:
+  - entity: switch.toilet_light
+    name: Light
+    icon: hass:ceiling-light
+  - entity: input_number.toilet_brightness
+    icon: hass:ceiling-light
+    name: Light brightness
+  - entity: switch.toilet_fan
+    name: Fan
+    icon: hass:fan
+  - entity: switch.toilet_fan_auto
+    name: Fan auto
+    icon: hass:fan
+  - entity: switch.toilet_boiler
+    name: Boiler
+    icon: mdi:flash
+  - entity: sensor.toilet_temp
+    icon: hass:thermometer
+    name: Temperature
+  - entity: switch.playroom_heat_valve
+    name: Playroom heat valve
+    icon: mdi:flash
+  - entity: switch.bedroom_heat_valve
+    name: Bedroom heat valve
+    icon: mdi:flash
+  - entity: switch.kitchen_heat_valve
+    name: Kitchen heat valve
+    icon: mdi:flash
+title: Toilet
+show_header_toggle: false
+state_color: true

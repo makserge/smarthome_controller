@@ -85,3 +85,98 @@
       data_template:
         entity_id: input_number.balcony_thermostat_temp
         value: "{{ (states('sensor.balcony_thermostat_temp'))|int }}"
+
+- alias: "Bathroom light brightness set" 
+  trigger:
+    platform: state
+    entity_id: input_number.bathroom_brightness
+  action:
+    - service: modbus.write_register
+      data_template:
+        hub: serial
+        unit: 32
+        address: 0
+        value: "{{ (states('input_number.bathroom_brightness'))|int }}"
+        
+- alias: "Bathroom light brightness get"
+  trigger:
+    platform: state
+    entity_id: sensor.bathroom_brightness
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.bathroom_brightness
+        value: "{{ (states('sensor.bathroom_brightness'))|int }}"
+
+- alias: "Toilet light brightness set" 
+  trigger:
+    platform: state
+    entity_id: input_number.toilet_brightness
+  action:
+    - service: modbus.write_register
+      data_template:
+        hub: serial
+        unit: 32
+        address: 5
+        value: "{{ (states('input_number.toilet_brightness'))|int }}"
+        
+- alias: "Toilet light brightness get"
+  trigger:
+    platform: state
+    entity_id: sensor.toilet_brightness
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.toilet_brightness
+        value: "{{ (states('sensor.toilet_brightness'))|int }}"
+
+- alias: "Playroom heater set" 
+  trigger:
+    platform: state
+    entity_id: input_boolean.playroom_heat_valve
+  action:
+    - service: modbus.write_coil
+      data_template:
+        hub: serial
+        unit: 32
+        address: 7
+        state:  >
+          {%- if states('input_boolean.playroom_heat_valve') == 'on' -%}
+            false
+          {%- else -%}
+            true
+          {%- endif -%}
+          
+- alias: "Bedroom heater set" 
+  trigger:
+    platform: state
+    entity_id: input_boolean.bedroom_heat_valve
+  action:
+    - service: modbus.write_coil
+      data_template:
+        hub: serial
+        unit: 32
+        address: 5
+        state:  >
+          {%- if states('input_boolean.bedroom_heat_valve') == 'on' -%}
+            false
+          {%- else -%}
+            true
+          {%- endif -%}
+        
+- alias: "Kitchen heater set" 
+  trigger:
+    platform: state
+    entity_id: input_boolean.kitchen_heat_valve
+  action:
+    - service: modbus.write_coil
+      data_template:
+        hub: serial
+        unit: 32
+        address: 6
+        state:  >
+          {%- if states('input_boolean.kitchen_heat_valve') == 'on' -%}
+            false
+          {%- else -%}
+            true
+          {%- endif -%}

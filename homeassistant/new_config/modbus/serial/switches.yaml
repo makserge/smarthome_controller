@@ -37,6 +37,12 @@
   write_type: holding
   verify:
   scan_interval: 10
+- name: bathroom_heater_switch
+  slave: 50
+  address: 1
+  write_type: coil
+  verify:
+  scan_interval: 10
   
 - name: balcony_main_switch
   slave: 31
@@ -50,3 +56,71 @@
   write_type: holding
   verify:
   scan_interval: 10
+
+- name: bathroom_fan
+  slave: 32
+  address: 0
+  write_type: coil
+  verify:
+  scan_interval: 10
+- name: bathroom_light
+  slave: 32
+  address: 2
+  write_type: coil
+  verify:
+  scan_interval: 10
+- name: bathroom_fan_auto
+  slave: 32
+  address: 1
+  write_type: holding
+  verify:
+  scan_interval: 900
+- name: toilet_fan
+  slave: 32
+  address: 1
+  write_type: coil
+  verify:
+  scan_interval: 10
+- name: toilet_light
+  slave: 32
+  address: 3
+  write_type: coil
+  verify:
+  scan_interval: 10
+- name: toilet_boiler
+  slave: 32
+  address: 4
+  write_type: coil
+  verify:
+  scan_interval: 10
+- name: toilet_fan_auto
+  slave: 32
+  address: 3
+  write_type: holding
+  verify:
+  scan_interval: 900
+- name: toilet_light_auto
+  slave: 32
+  address: 6
+  write_type: holding
+  verify:
+  scan_interval: 900
+  
+- name: bedroom_heat_valve
+  slave: 32
+  address: 5
+  write_type: coil
+  verify:
+  scan_interval: 900
+- name: kitchen_heat_valve
+  slave: 32
+  address: 6
+  write_type: coil
+  verify:
+  scan_interval: 900
+- name: playroom_heat_valve
+  slave: 32
+  address: 7
+  write_type: coil
+  verify:
+  scan_interval: 900
