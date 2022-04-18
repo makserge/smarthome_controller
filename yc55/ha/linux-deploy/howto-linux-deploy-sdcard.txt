@@ -1,0 +1,138 @@
+1. Download parted
+https://iwf1.com/iwf-repo/parted.rar
+
+2. Remount system to RW
+
+adb root
+adb disable-verity
+adb reboot
+
+3. Eject SD Card
+
+4. Install parted binary
+
+adb root
+adb remount
+
+adb push parted /bin
+
+adb shell
+su
+chmod +x /bin/parted
+
+5. Make partitions
+
+parted /dev/block/mmcblk0
+
+(parted) p
+p
+Model: SD SH32G (sd/mmc)
+Disk /dev/block/mmcblk0: 31.9GB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+
+Number  Start   End     Size    Type     File system  Flags
+ 1      1049kB  31.9GB  31.9GB  primary  fat32        lba
+
+
+(parted)rm 1
+rm 1
+
+(parted) p
+p
+Model: SD SH32G (sd/mmc)
+Disk /dev/block/mmcblk0: 31.9GB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+
+Number  Start  End  Size  Type  File system  Flags
+
+
+mkpart primary fat32 1MiB 40%
+mkpart primary ext4 40% 85%
+mkpart primary linux-swap 85% 100%
+
+(parted) p
+p
+Model: SD SH32G (sd/mmc)
+Disk /dev/block/mmcblk0: 31.9GB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+
+Number  Start   End     Size    Type     File system  Flags
+ 1      32.3kB  12.8GB  12.8GB  primary               lba
+ 2      12.8GB  27.1GB  14.4GB  primary
+ 3      27.1GB  31.9GB  4785MB  primary
+
+(parted) quit
+quit
+
+
+6. Format partition
+
+mke2fs -t ext4 /dev/block/mmcblk0p2
+
+7. Install Linux Deploy from Play Market
+https://play.google.com/store/apps/details?id=ru.meefik.linuxdeploy
+
+8. Open it and click on the hamburger menu->Setting and select: Lock screen, Lock Wi-Fi, Wake lock.
+
+9. Click on settings (right to stop button) on the top right corner and configure as following:
+
+Disribution: Ubuntu
+Architecture: arm64
+Distribution suite: bionic
+Source path: http://ports.ubuntu.com
+Installation Type: Partition
+Installation path: /dev/block/mmcblk0p2
+File system: ext4
+Username: android
+User password: ********
+Privileged users: android:aid_inet android:aid_sdcard_rw android:aid_graphics
+Localization: C
+DNS: Automatic detection
+Init: Enable
+Init system: sysv
+Mounts: Disable
+SSH: Enable
+GUI: Disable
+
+10. Setup a new profile for ubuntu
+ 
+Click on the hamburger menu -> Profiles -> + -> enter "ubuntu" -> ok .
+Tap on "ubuntu" to select profile.
+Edit /data/data/ru.meefik.linuxdeploy/files/config/ubuntu.conf at about line 30 there is a line Suite="bionic" change it to `Suite="hirsute".
+Go to /data/data/ru.meefik.linuxdeploy/files/include/bootstrap/debian/debootstrap/scripts copy the file bionic and name it hirsute.
+Now go back to LinuxDeploy and reopen the new profile you made. (Note that the Distribution Suite is blank, this is OK). 
+
+
+11. Click on Install in the … icon placed on the upper corner at the right.
+Wait for <<< deploy
+
+12. Click Start to run your Linux Machine.
+
+13. Login to SSH (port 22)
+
+14. Install HA
+
+su
+apt update
+apt upgrade -y 
+
+apt install nano curl python3-dev python3-pip python3-venv libffi-dev libjpeg-dev -y
+python3 -m venv hass 
+source hass/bin/activate
+python3 -m pip install wheel
+
+pip3 install homeassistant
+
+
+15. Create Home Assistant config folder
+mkdir /home/android/hass/config
+
+16. Start Home Assistant 
+
+/home/android/hass/bin/hass -c /home/android/hass/config --log-file /home/android/hass/hass.log
+
+17. Open Browser on http://myipaddress:8123 and finish onboarding
+

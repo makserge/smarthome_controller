@@ -1,0 +1,30 @@
+1. Install Linux Deploy from Play Market
+https://play.google.com/store/apps/details?id=ru.meefik.linuxdeploy
+2. Open it
+3. Click on the settings icon in the lower corner on the right and configure as you wish:
+
+Disribution: Debian
+Architecture: Armhf
+Distribution suite: Buster
+Source path: http://ftp.debian.org/debian
+Installation Type: File
+Installation path: ${EXTERNAL_STORAGE}/linux.img
+${SECONDARY_STORAGE}/linux.img
+File system: ext4
+Image size: 4000 MB
+Username: android
+User password: ********
+Privileged users: android:aid_inet android:aid_sdcard_rw android:aid_graphics
+Localization: C
+DNS: Automatic detection
+Init: Enable
+Init system: sysv
+Mounts: Enable
+Mount pounts: /sdcard/
+SSH: Enable
+GUI: Enable
+Graphics subsystem: VNC
+Desktop environment: Mate 
+
+Then click on INSTALL in the … icon placed on the upper corner at the right. (it takes around 20 minutes)
+After this, click START to run your Linux Machine.
