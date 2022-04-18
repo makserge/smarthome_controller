@@ -21,3 +21,15 @@ balcony_thermostat_temp:
   min: 22
   max: 40
   step: 1
+
+bathroom_brightness:
+  name: Bathroom light brightness
+  min: 10
+  max: 100
+  step: 5
+    
+toilet_brightness:
+  name: Toilet light brightness
+  min: 20
+  max: 100
+  step: 5

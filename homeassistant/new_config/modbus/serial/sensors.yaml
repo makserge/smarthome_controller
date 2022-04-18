@@ -144,3 +144,44 @@
   unit_of_measurement: "%"
   data_type: uint16
   scan_interval: 900
+
+- name: bathroom_temp
+  slave: 32
+  address: 2
+  input_type: input
+  unit_of_measurement: °C
+  scale: 0.1
+  offset: 0
+  precision: 1
+  data_type: uint16
+  scan_interval: 900
+- name: bathroom_humidity
+  slave: 32
+  address: 3
+  input_type: input
+  unit_of_measurement: "%"
+  data_type: uint16
+  scan_interval: 900
+- name: bathroom_brightness
+  slave: 32
+  address: 0
+  input_type: holding
+  data_type: uint16
+  scan_interval: 900
+- name: toilet_temp
+  slave: 32
+  address: 1
+  input_type: input
+  unit_of_measurement: °C
+  scale: 0.1
+  offset: 0
+  precision: 1
+  data_type: uint16
+  scan_interval: 900
+- name: toilet_brightness
+  slave: 32
+  address: 5
+  input_type: holding
+  data_type: uint16
+  scan_interval: 900
+

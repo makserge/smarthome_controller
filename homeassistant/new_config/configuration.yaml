@@ -12,6 +12,8 @@ script: !include scripts.yaml
 scene: !include scenes.yaml
 input_number: !include input_number.yaml
 modbus: !include modbus.yaml
+climate: !include climate.yaml
+input_boolean: !include input_boolean.yaml
 
 recorder:
   purge_keep_days: 7
