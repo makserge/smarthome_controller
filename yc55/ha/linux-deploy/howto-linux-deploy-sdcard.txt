@@ -75,7 +75,7 @@ mke2fs -t ext4 /dev/block/mmcblk0p2
 7. Install Linux Deploy from Play Market
 https://play.google.com/store/apps/details?id=ru.meefik.linuxdeploy
 
-8. Open it and click on the hamburger menu->Setting and select: Lock screen, Lock Wi-Fi, Wake lock.
+8. Open it and click on the hamburger menu->Setting and select: Lock Wi-Fi, Wake lock, Autostart, Autostart delay 30.
 
 9. Click on settings (right to stop button) on the top right corner and configure as following:
 
@@ -113,11 +113,16 @@ Wait for <<< deploy
 
 13. Login to SSH (port 22)
 
-14. Install HA
+14. Install supervisor
 
 su
 apt update
 apt upgrade -y 
+
+apt install supervisor -y
+
+15. Install HA
+
 
 apt install nano curl python3-dev python3-pip python3-venv libffi-dev libjpeg-dev -y
 python3 -m venv hass 
@@ -127,12 +132,145 @@ python3 -m pip install wheel
 pip3 install homeassistant
 
 
-15. Create Home Assistant config folder
+16. Create Home Assistant config folder
 mkdir /home/android/hass/config
 
-16. Start Home Assistant 
+17. Start Home Assistant 
 
-/home/android/hass/bin/hass -c /home/android/hass/config --log-file /home/android/hass/hass.log
+/home/android/hass/bin/hass -c /home/android/hass/config --log-file /home/android/hass/hass.log &
 
-17. Open Browser on http://myipaddress:8123 and finish onboarding
+18. Open Browser on http://myipaddress:8123 and finish onboarding
 
+19. Add HA to supervisor
+
+nano /etc/supervisor/conf.d/hass.conf
+
+[program:hass]
+command=/home/android/hass/bin/hass -c /home/android/hass/config --log-file /home/android/hass/hass.log
+autostart=true
+autorestart=true
+startretries=5
+numprocs=1
+startsecs=0
+process_name=%(program_name)s_%(process_num)02d
+stderr_logfile=/var/log/supervisor/%(program_name)s_stderr.log
+stderr_logfile_maxbytes=10MB
+stdout_logfile=/var/log/supervisor/%(program_name)s_stdout.log
+stdout_logfile_maxbytes=10MB
+
+
+
+supervisorctl reread
+hass: available
+
+
+supervisorctl update
+hass: added process group
+
+
+supervisorctl
+hass:hass_00                     RUNNING   pid 618, uptime 0:00:28
+
+20. Install Mosquitto
+
+su
+apt install mosquitto -y
+
+mosquitto_passwd -c /etc/mosquitto/passwd smarthome
+Password:
+
+nano /etc/mosquitto/conf.d/default.conf
+add
+
+listener 1883
+allow_anonymous false
+password_file /etc/mosquitto/passwd
+
+21. Start Mosquitto
+
+mosquitto
+
+22. Add Mosquitto to supervisor
+
+chmod -x /etc/init.d/mosquitto
+touch /run/mosquitto/mosquitto.pid
+chmod 777 /run/mosquitto/mosquitto.pid
+
+nano /etc/supervisor/conf.d/mosquitto.conf
+
+[program:mosquitto]
+command=/usr/sbin/mosquitto -c /etc/mosquitto/mosquitto.conf
+autostart=true
+autorestart=true
+startretries=5
+numprocs=1
+startsecs=0
+process_name=%(program_name)s_%(process_num)02d
+stderr_logfile=/var/log/supervisor/%(program_name)s_stderr.log
+stderr_logfile_maxbytes=10MB
+stdout_logfile=/var/log/supervisor/%(program_name)s_stdout.log
+stdout_logfile_maxbytes=10MB
+
+
+supervisorctl reread
+mosquitto: available
+
+
+supervisorctl update
+mosquitto: added process group
+
+
+supervisorctl
+hass:hass_00                     RUNNING   pid 13783, uptime 0:46:59
+mosquitto:mosquitto_00           RUNNING   pid 17288, uptime 0:00:00
+
+23. Add MQTT integration in Home Assistant
+
+In HA Go to Configuration -> Devices & Services (Integrations tab) -> add integration -> search for MQTT -> Click on MQTT
+
+Broker: 127.0.0.1
+Port: 1883
+Username: smarthome
+Password: ******
+
+Press Submit then press Finish
+
+24. Configure MQTT in Tasmota
+
+Open your Tasmotized device web interface
+Click on Configuration -> Configure MQTT
+
+Host: ****
+Port: 1883
+User: smarthome
+Password: *****
+Topic: tasmota_smart_switch
+
+Click on Save.
+
+The Tasmotized device will restart.
+
+25. Configure Tasmota
+
+
+Open your Tasmotized device web interface
+Click on the Console
+
+Enable native discovery
+
+Paste the following command in the text field and press Enter:
+
+SetOption19 0
+
+Set device as switch
+
+SetOption30 0
+
+
+26. Home Assistant Tasmota Integration
+
+In HA Go to Configuration -> Devices & Services (Integrations tab) -> add integration -> search for Tasmota -> Click on Tasmota -> Submit -> Finish
+
+27. Autostart Linux Deploy
+
+/data/data/ru.meefik.linuxdeploy/files/bin/linuxdeploy start -m
