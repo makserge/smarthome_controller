@@ -1,0 +1,10 @@
+type: glance
+entities:
+  - entity: sensor.bedroom_co2
+    icon: hass:molecule-co2
+    name: CO2
+  - entity: sensor.bedroom_temperature
+    name: Temperature
+  - entity: sensor.bedroom_humidity
+    name: Humidity
+    icon: mdi:water-percent

@@ -1,0 +1,11 @@
+type: entities
+entities:
+  - entity: input_number.ventmachine_speed
+    name: Speed
+    icon: mdi:air-conditioner
+  - entity: input_number.ventmachine_temp
+    icon: hass:thermometer
+    name: Temperature
+title: Ventmachine
+state_color: true
+show_header_toggle: false

@@ -1,0 +1,20 @@
+type: grid
+cards:
+  - type: button
+    tap_action:
+      action: toggle
+    entity: switch.bedroom_main_switch
+    name: Main light
+    icon: hass:ceiling-light
+  - type: button
+    tap_action:
+      action: toggle
+    entity: switch.bedroom_left_bra_switch
+    icon: mdi:lightbulb
+    name: Left bra
+  - type: button
+    tap_action:
+      action: toggle
+    entity: switch.bedroom_right_bra_switch
+    icon: mdi:lightbulb
+    name: Right bra
