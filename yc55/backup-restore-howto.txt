@@ -1,0 +1,12 @@
+adb shell
+su
+
+#backup
+dd if=/dev/block/platform/fe310000.sdhci/by-name/boot | gzip -c | split -b 2000m - /storage/3736-3461/backup/10042022/boot.gz.
+dd if=/dev/block/platform/fe310000.sdhci/by-name/userdata | gzip -c | split -b 2000m - /storage/3736-3461/backup/10042022/userdata.gz.
+dd if=/dev/block/platform/fe310000.sdhci/by-name/system | gzip -c | split -b 2000m - /storage/3736-3461/backup/10042022/system.gz.
+
+#restore
+cat /storage/3736-3461/backup/10042022/boot.gz* | gzip -dc | dd of=/dev/block/platform/fe310000.sdhci/by-name/boot
+cat /storage/3736-3461/backup/10042022/userdata.gz* | gzip -dc | dd of=/dev/block/platform/fe310000.sdhci/by-name/userdata
+cat /storage/3736-3461/backup/10042022/system.gz* | gzip -dc | dd of=/dev/block/platform/fe310000.sdhci/by-name/system
