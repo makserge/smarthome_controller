@@ -1,0 +1,15 @@
+adb root
+adb remount
+adb push Google+13.19.12.23.arm.apk /system/priv-app/
+adb reboot
+
+Google App -> Profile -> Settings -> Google Assistant -> Hey Google & Voice Match -> Hey Google -> On
+
+If error "The Google App isnt your default Assist App"
+
+Settings -> Apps & notifications -> Default apps -> Digital assistant app -> Default digital assistant app -> Google -> Ok
+
+Google App -> Profile -> Settings -> Google Assistant -> Hey Google & Voice Match -> Hey Google -> On -> I agree -> Continue ->
+Voice model -> Retrain voice model -> Allow Google to record audio -> Allow all the time -> Train 4 phrases -> Finish
+
+Security -> Screen lock -> Swipe
