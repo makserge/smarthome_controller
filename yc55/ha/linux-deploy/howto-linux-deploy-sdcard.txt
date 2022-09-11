@@ -274,3 +274,24 @@ In HA Go to Configuration -> Devices & Services (Integrations tab) -> add integr
 27. Autostart Linux Deploy
 
 /data/data/ru.meefik.linuxdeploy/files/bin/linuxdeploy start -m
+
+28. Add browser_mod to HA
+
+Download browser_mod from https://github.com/thomasloven/hass-browser_mod
+
+Copy the contents of custom_components/browser_mod/ to <your config dir>/custom_components/browser_mod/ 
+
+Restart Home Assistant
+Add the "Browser Mod" integration in Settings -> Devices & Services -> Add Integration 
+Restart Home Assistant
+Go to the Browser Mod panel in your sidebar
+Make sure the "Register" toggle is checked.
+Refresh the page (F5)
+Go to Developer Tools -> Services Open your Home Assistant instance and show your service developer tools.
+Select service "Browser Mod: popup (browser_mod.popup)"
+Check the "Title" checkbar and write something as a title
+Enter some text in the "Content" text box
+Not yaml or anything, just any text for now.
+Click "CALL SERVICE"
+The button is likely grayed out. That's a Home Assistant visual bug. Click it anyway.
+A popup dialog should now open on all your Registered Browsers.

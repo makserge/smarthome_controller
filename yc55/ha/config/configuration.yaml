@@ -1,0 +1,53 @@
+
+# Loads default set of integrations. Do not remove.
+default_config:
+
+logger:
+  default: critical
+  logs:
+    # log level for HA core
+    homeassistant.core: fatal
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+recorder:
+  commit_interval: 60
+  purge_keep_days: 7
+#  db_url: 'sqlite:///:memory:'
+  include:
+    entities:
+    - sensor.co2
+
+mqtt:
+  sensor:
+    - name: "CO2"
+      state_topic: "co2detector/co2"
+      unit_of_measurement: "ppm"
+    - name: "Temperature"
+      state_topic: "co2detector/temp"
+      unit_of_measurement: "°C"
+    - name: "Humidity"
+      state_topic: "co2detector/hum"
+      unit_of_measurement: "%"
+    - name: "Button"
+      state_topic: "tempsensor/button"
+    - name: "Temperature sensor"
+      state_topic: "tempsensor/temp"
+      unit_of_measurement: "°C"
+    - name: "Humidity sensor"
+      state_topic: "tempsensor/hum"
+      unit_of_measurement: "%"
+      
+camera:
+- platform: generic
+  name: My Cam
+  username: a
+  password: a
+  authentication: basic
+  stream_source: rtsp://a:a@192.168.8.110:8080/h264_pcm.sdp

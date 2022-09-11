@@ -1,0 +1,22 @@
+- id: '1662932724602'
+  alias: Doorbell pressed
+  description: Doorbell pressed
+  trigger:
+  - platform: mqtt
+    topic: tempsensor/button
+  condition: []
+  action:
+  - service: browser_mod.popup
+    data:
+      title: Doorbell
+      content:
+        type: picture-entity
+        entity: camera.my_cam
+        camera_view: live
+      size: fullscreen
+      timeout: 300000
+      left_button: Cancel
+      right_button: Open Door
+      left_button_action:
+        service: browser_mod.close_popup
+  mode: single
